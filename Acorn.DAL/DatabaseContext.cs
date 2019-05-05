@@ -63,7 +63,8 @@ namespace Acorn.DAL
 
                 entity.Property(e => e.Order)
                     .IsRequired()
-                    .HasColumnType("VARCHAR(10)");
+                    .HasColumnType("VARCHAR(10)")
+                    .HasDefaultValueSql("'STOP'");
 
                 entity.HasOne(d => d.Bot)
                     .WithOne(p => p.BotOrder)

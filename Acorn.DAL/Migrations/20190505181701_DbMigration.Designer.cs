@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Acorn.DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190505175800_DBMigration")]
-    partial class DBMigration
+    [Migration("20190505181701_DbMigration")]
+    partial class DbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -69,7 +69,9 @@ namespace Acorn.DAL.Migrations
 
                     b.Property<string>("Order")
                         .IsRequired()
-                        .HasColumnType("VARCHAR(10)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("VARCHAR(10)")
+                        .HasDefaultValueSql("'STOP'");
 
                     b.HasKey("BotId");
 

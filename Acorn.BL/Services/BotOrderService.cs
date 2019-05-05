@@ -18,11 +18,6 @@ namespace Acorn.BL.Services
 
         public async Task CreateNewBotOrderAsync(BotOrder botOrder)
         {
-            if (!BotOrderValidator.ValidateDefault(botOrder))
-            {
-                throw new InvalidOperationException("BotOrder's validation failed");
-            }
-
             await _botOrdersRepository.AddBotOrderAsync(botOrder);
         }
 

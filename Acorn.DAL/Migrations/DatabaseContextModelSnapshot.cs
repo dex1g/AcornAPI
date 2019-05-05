@@ -67,7 +67,9 @@ namespace Acorn.DAL.Migrations
 
                     b.Property<string>("Order")
                         .IsRequired()
-                        .HasColumnType("VARCHAR(10)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("VARCHAR(10)")
+                        .HasDefaultValueSql("'STOP'");
 
                     b.HasKey("BotId");
 
