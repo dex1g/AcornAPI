@@ -39,16 +39,18 @@ namespace Acorn.DAL
 
                 entity.Property(e => e.Login)
                     .IsRequired()
-                    .HasColumnType("VARCHAR(20)");
+                    .HasColumnType("VARCHAR(20)")
+                    .HasDefaultValueSql("'login'");
 
                 entity.Property(e => e.Password)
                     .IsRequired()
-                    .HasColumnType("VARCHAR(25)");
+                    .HasColumnType("VARCHAR(25)")
+                    .HasDefaultValueSql("'password'");
 
                 entity.HasOne(d => d.Bot)
-                    .WithOne(p => p.Accounts)
+                    .WithOne(p => p.Account)
                     .HasForeignKey<Account>(d => d.BotId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<BotOrder>(entity =>
@@ -66,7 +68,7 @@ namespace Acorn.DAL
                 entity.HasOne(d => d.Bot)
                     .WithOne(p => p.BotOrder)
                     .HasForeignKey<BotOrder>(d => d.BotId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Bot>(entity =>
@@ -138,7 +140,7 @@ namespace Acorn.DAL
                 entity.HasOne(d => d.Bot)
                     .WithOne(p => p.Config)
                     .HasForeignKey<Config>(d => d.BotId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<FreshAccount>(entity =>
@@ -180,7 +182,7 @@ namespace Acorn.DAL
                 entity.HasOne(d => d.Bot)
                     .WithMany(p => p.Logs)
                     .HasForeignKey(d => d.BotId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<ReadyAccount>(entity =>

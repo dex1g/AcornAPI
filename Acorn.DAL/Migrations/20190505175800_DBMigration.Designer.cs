@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Acorn.DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190504155309_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190505175800_DBMigration")]
+    partial class DBMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,11 +31,15 @@ namespace Acorn.DAL.Migrations
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasColumnType("VARCHAR(20)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("VARCHAR(20)")
+                        .HasDefaultValueSql("'login'");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("VARCHAR(25)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("VARCHAR(25)")
+                        .HasDefaultValueSql("'password'");
 
                     b.HasKey("BotId");
 
@@ -207,29 +211,33 @@ namespace Acorn.DAL.Migrations
             modelBuilder.Entity("Acorn.BL.Models.Account", b =>
                 {
                     b.HasOne("Acorn.BL.Models.Bot", "Bot")
-                        .WithOne("Accounts")
-                        .HasForeignKey("Acorn.BL.Models.Account", "BotId");
+                        .WithOne("Account")
+                        .HasForeignKey("Acorn.BL.Models.Account", "BotId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Acorn.BL.Models.BotOrder", b =>
                 {
                     b.HasOne("Acorn.BL.Models.Bot", "Bot")
                         .WithOne("BotOrder")
-                        .HasForeignKey("Acorn.BL.Models.BotOrder", "BotId");
+                        .HasForeignKey("Acorn.BL.Models.BotOrder", "BotId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Acorn.BL.Models.Config", b =>
                 {
                     b.HasOne("Acorn.BL.Models.Bot", "Bot")
                         .WithOne("Config")
-                        .HasForeignKey("Acorn.BL.Models.Config", "BotId");
+                        .HasForeignKey("Acorn.BL.Models.Config", "BotId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Acorn.BL.Models.Log", b =>
                 {
                     b.HasOne("Acorn.BL.Models.Bot", "Bot")
                         .WithMany("Logs")
-                        .HasForeignKey("BotId");
+                        .HasForeignKey("BotId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

@@ -47,8 +47,14 @@ namespace AcornAPI.Controllers
         {
             try
             {
+                Account account = new Account { Bot = bot, BotId = bot.BotId };
+                BotOrder botOrder = new BotOrder { Bot = bot, BotId = bot.BotId };
+                Config botConfig = new Config { Bot = bot, BotId = bot.BotId };
+                bot.Account = account;
+                bot.BotOrder = botOrder;
+                bot.Config = botConfig;
                 await _botService.CreateNewBotAsync(_mapper.Map<Bot>(bot));
-                await _configService.CreateNewConfigAsync(new Config { Bot = bot, BotId = bot.BotId });
+                //await _configService.CreateNewConfigAsync(botConfig);
                 //return CreatedAtAction(nameof(GetBotById), new { BotId = bot.BotId }, bot);
                 return Ok();
             }
