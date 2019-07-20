@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Acorn.BL.Helpers;
 
 namespace Acorn.BL.Models
@@ -8,14 +7,16 @@ namespace Acorn.BL.Models
     {
         public Bot()
         {
+            Accounts = new HashSet<Account>();
             Logs = new HashSet<Log>();
         }
 
-        public long BotId { get; set; }
-        public BotOrders Order { get; set; }
+        public int BotId { get; set; }
+        public BotOrders BotOrder { get; set; }
 
-        public virtual ICollection<Account> Accounts { get; set; }
+
         public virtual Config Config { get; set; }
+        public virtual ICollection<Account> Accounts { get; set; }
         public virtual ICollection<Log> Logs { get; set; }
     }
 }

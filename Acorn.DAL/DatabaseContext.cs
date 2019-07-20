@@ -1,10 +1,19 @@
+﻿using Acorn.BL.Models;
 using Microsoft.EntityFrameworkCore;
-using Acorn.BL.Models;
 
 namespace Acorn.DAL
 {
-    public class DatabaseContext : DbContext
+    public partial class DatabaseContext : DbContext
     {
+        public DatabaseContext()
+        {
+        }
+
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
+            : base(options)
+        {
+        }
+
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Bot> Bots { get; set; }
         public virtual DbSet<Config> Configs { get; set; }
@@ -12,200 +21,228 @@ namespace Acorn.DAL
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<ReadyAccount> ReadyAccounts { get; set; }
 
-        public DatabaseContext()
-        {
-        }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=217.61.106.55;Database=acorn;Username=acorn;Password=acorn");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql("Host=217.61.106.55;Database=acorn;Username=acorn;Password=acorn");
+            }
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Account>(entity =>
-        //    {
-        //        entity.HasKey(e => e.AccountId);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ForNpgsqlHasEnum(null, "ai_configs", new[] { "Follow" })
+                .ForNpgsqlHasEnum(null, "bot_orders", new[] { "Start", "Stop", "Restart", "Reboot" })
+                .ForNpgsqlHasEnum(null, "queue_types", new[] { "Intro", "Beginner", "Intermediate" })
+                .ForNpgsqlHasEnum(null, "regions", new[] { "Eune", "Euw", "Na" })
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
-        //        entity.Property(e => e.AccountId)
-        //            .HasColumnType("INT(3)")
-        //            .ValueGeneratedNever();
+            modelBuilder.Entity<Account>(entity =>
+            {
+                entity.HasKey(e => e.AccountId)
+                    .HasName("accounts_pkey");
 
-        //        entity.Property(e => e.BotId)
-        //            .HasColumnType("INT(3)")
-        //            .ValueGeneratedNever()
-        //            .IsRequired();
+                entity.ToTable("accounts");
 
-        //        entity.Property(e => e.Login)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(20)")
-        //            .HasDefaultValueSql("'login'");
+                entity.Property(e => e.AccountId)
+                    .HasColumnName("account_id")
+                    .HasDefaultValueSql("nextval('account_seq'::regclass)");
 
-        //        entity.Property(e => e.Password)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(25)")
-        //            .HasDefaultValueSql("'password'");
+                entity.Property(e => e.BirthDate)
+                    .HasColumnName("birth_date")
+                    .HasColumnType("date")
+                    .HasDefaultValueSql("'1970-01-01'::date");
 
-        //        entity.Property(e => e.Region)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(10)")
-        //            .HasConversion(v => v.ToString(),
-        //                v => (Regions)Enum.Parse(typeof(Regions), v));
+                entity.Property(e => e.BotId).HasColumnName("bot_id");
 
-        //        entity.Property(e => e.Level)
-        //            .HasColumnType("INT(3)")
-        //            .IsRequired()
-        //            .HasDefaultValueSql("0");
+                entity.Property(e => e.ExpPercentage).HasColumnName("exp_percentage");
 
-        //        entity.Property(e => e.ExpPercentage)
-        //            .HasColumnType("INT(3)")
-        //            .IsRequired()
-        //            .HasDefaultValueSql("0");
+                entity.Property(e => e.Level).HasColumnName("level");
 
-        //        entity.Property(e => e.BirthDate)
-        //            .IsRequired()
-        //            .HasColumnType("DATE")
-        //            .HasDefaultValueSql("'1970-01-01'");
+                entity.Property(e => e.Login)
+                    .IsRequired()
+                    .HasColumnName("login")
+                    .HasMaxLength(20);
 
-        //        entity.HasOne(d => d.Bot)
-        //            .WithMany(p => p.Accounts)
-        //            .HasForeignKey(d => d.BotId)
-        //            .OnDelete(DeleteBehavior.ClientSetNull);
-        //    });
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasColumnName("password")
+                    .HasMaxLength(30);
 
-        //    modelBuilder.Entity<Bot>(entity =>
-        //    {
-        //        entity.HasKey(e => e.BotId);
+                entity.Property(e => e.Region)
+                    .IsRequired()
+                    .HasColumnName("region");
 
-        //        entity.Property(e => e.BotId)
-        //            .HasColumnType("INT(3)")
-        //            .ValueGeneratedNever();
+                entity.HasOne(d => d.Bot)
+                    .WithMany(p => p.Accounts)
+                    .HasForeignKey(d => d.BotId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("accounts_bot_id_fkey");
+            });
 
-        //        entity.Property(e => e.Order)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(10)")
-        //            .HasConversion(v => v.ToString(),
-        //                v => (BotOrders)Enum.Parse(typeof(BotOrders), v))
-        //            .HasDefaultValueSql("'STOP'");
-        //    });
+            modelBuilder.Entity<Bot>(entity =>
+            {
+                entity.HasKey(e => e.BotId)
+                    .HasName("BOTS_pkey");
 
-        //    modelBuilder.Entity<Config>(entity =>
-        //    {
-        //        entity.HasKey(e => e.BotId);
+                entity.ToTable("bots");
 
-        //        entity.Property(e => e.BotId)
-        //            .HasColumnType("INT(3)")
-        //            .ValueGeneratedNever();
+                entity.Property(e => e.BotId)
+                    .HasColumnName("bot_id")
+                    .ValueGeneratedNever();
 
-        //        entity.Property(e => e.Aiconfig)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(20)")
-        //            .HasDefaultValueSql("'follow'");
+                entity.Property(e => e.BotOrder)
+                    .IsRequired()
+                    .HasColumnName("bot_order")
+                    .HasDefaultValueSql("'Start'::bot_orders");
+            });
 
-        //        entity.Property(e => e.OverwriteConfig)
-        //            .IsRequired()
-        //            .HasColumnType("BIT(1)")
-        //            .HasDefaultValueSql("1");
+            modelBuilder.Entity<Config>(entity =>
+            {
+                entity.HasKey(e => e.BotId)
+                    .HasName("configs_pkey");
 
-        //        entity.Property(e => e.CloseBrowser)
-        //            .IsRequired()
-        //            .HasColumnType("BIT(1)")
-        //            .HasDefaultValueSql("1");
+                entity.ToTable("configs");
 
-        //        entity.Property(e => e.Path)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(100)")
-        //            .HasDefaultValueSql("'C:/Riot Games/League of Legends/'");
+                entity.Property(e => e.AiConfig)
+                    .IsRequired()
+                    .HasColumnName("ai_config")
+                    .HasDefaultValueSql("'Follow'::ai_configs");
 
-        //        entity.Property(e => e.Queuetype)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(20)")
-        //            .HasDefaultValueSql("'intro_bot'");
+                entity.Property(e => e.BotId)
+                    .HasColumnName("bot_id")
+                    .ValueGeneratedNever();
 
-        //        entity.Property(e => e.NoActionTimeout)
-        //            .IsRequired()
-        //            .HasColumnType("INT(6)")
-        //            .HasDefaultValueSql("600");
+                entity.Property(e => e.CloseBrowser)
+                    .IsRequired()
+                    .HasColumnName("close_browser")
+                    .HasDefaultValueSql("true");
 
-        //        entity.HasOne(d => d.Bot)
-        //            .WithOne(p => p.Config)
-        //            .HasForeignKey<Config>(d => d.BotId)
-        //            .OnDelete(DeleteBehavior.Cascade);
-        //    });
+                entity.Property(e => e.NoActionTimeout)
+                    .HasColumnName("no_action_timeout")
+                    .HasDefaultValueSql("300");
 
-        //    modelBuilder.Entity<FreshAccount>(entity =>
-        //    {
-        //        entity.HasKey(e => e.FreshAccId);
+                entity.Property(e => e.OverwriteConfig)
+                    .IsRequired()
+                    .HasColumnName("overwrite_config")
+                    .HasDefaultValueSql("true");
 
-        //        entity.Property(e => e.FreshAccId).ValueGeneratedNever();
+                entity.Property(e => e.Path)
+                    .IsRequired()
+                    .HasColumnName("path")
+                    .HasMaxLength(100)
+                    .HasDefaultValueSql("'C:/Riot Games/League of Legends/'::character varying");
 
-        //        entity.Property(e => e.Login)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(20)");
+                entity.Property(e => e.QueueType)
+                    .IsRequired()
+                    .HasColumnName("queue_type")
+                    .HasDefaultValueSql("'Intro'::queue_types");
 
-        //        entity.Property(e => e.Password)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(25)");
+                entity.HasOne(d => d.Bot)
+                    .WithOne(p => p.Config)
+                    .HasForeignKey<Config>(d => d.BotId)
+                    .HasConstraintName("configs_bot_id_fkey");
+            });
 
-        //        entity.Property(e => e.Region)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(10)")
-        //            .HasConversion(v => v.ToString(),
-        //                v => (Regions)Enum.Parse(typeof(Regions), v));
+            modelBuilder.Entity<FreshAccount>(entity =>
+            {
+                entity.HasKey(e => e.FreshAccountId)
+                    .HasName("fresh_accounts_pkey");
 
-        //        entity.Property(e => e.BirthDate)
-        //            .IsRequired()
-        //            .HasColumnType("DATE")
-        //            .HasDefaultValueSql("'1970-01-01'");
-        //    });
+                entity.ToTable("fresh_accounts");
 
-        //    modelBuilder.Entity<Log>(entity =>
-        //    {
-        //        entity.HasKey(e => e.LogId);
+                entity.Property(e => e.FreshAccountId)
+                    .HasColumnName("fresh_account_id")
+                    .HasDefaultValueSql("nextval('fresh_acc_seq'::regclass)");
 
-        //        entity.Property(e => e.LogId).ValueGeneratedNever();
+                entity.Property(e => e.BirthDate)
+                    .HasColumnName("birth_date")
+                    .HasColumnType("date");
 
-        //        entity.Property(e => e.BotId).HasColumnType("INT(3)");
+                entity.Property(e => e.Login)
+                    .IsRequired()
+                    .HasColumnName("login")
+                    .HasMaxLength(20);
 
-        //        entity.Property(e => e.Date)
-        //            .IsRequired()
-        //            .HasColumnType("DATETIME");
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasColumnName("password")
+                    .HasMaxLength(30);
 
-        //        entity.Property(e => e.Status)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(100)");
+                entity.Property(e => e.Region)
+                    .IsRequired()
+                    .HasColumnName("region");
+            });
 
-        //        entity.HasOne(d => d.Bot)
-        //            .WithMany(p => p.Logs)
-        //            .HasForeignKey(d => d.BotId)
-        //            .OnDelete(DeleteBehavior.Cascade);
-        //    });
+            modelBuilder.Entity<Log>(entity =>
+            {
+                entity.HasKey(e => e.LogId)
+                    .HasName("logs_pkey");
 
-        //    modelBuilder.Entity<ReadyAccount>(entity =>
-        //    {
-        //        entity.HasKey(e => e.ReadyAccId);
+                entity.ToTable("logs");
 
-        //        entity.Property(e => e.ReadyAccId).ValueGeneratedNever();
+                entity.Property(e => e.LogId)
+                    .HasColumnName("log_id")
+                    .HasDefaultValueSql("nextval('log_id_seq'::regclass)");
 
-        //        entity.Property(e => e.Login)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(20)");
+                entity.Property(e => e.BotId).HasColumnName("bot_id");
 
-        //        entity.Property(e => e.Password)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(25)");
+                entity.Property(e => e.Date).HasColumnName("date");
 
-        //        entity.Property(e => e.Region)
-        //            .IsRequired()
-        //            .HasColumnType("VARCHAR(10)")
-        //            .HasConversion(v => v.ToString(),
-        //                v => (Regions)Enum.Parse(typeof(Regions), v));
+                entity.Property(e => e.Status)
+                    .IsRequired()
+                    .HasColumnName("status")
+                    .HasMaxLength(150);
 
-        //        entity.Property(e => e.BirthDate)
-        //            .IsRequired()
-        //            .HasColumnType("DATE")
-        //            .HasDefaultValueSql("'1970-01-01'");
-        //    });
-        //}
+                entity.HasOne(d => d.Bot)
+                    .WithMany(p => p.Logs)
+                    .HasForeignKey(d => d.BotId)
+                    .HasConstraintName("logs_bot_id_fkey");
+            });
+
+            modelBuilder.Entity<ReadyAccount>(entity =>
+            {
+                entity.HasKey(e => e.ReadyAccountId)
+                    .HasName("ready_accounts_pkey");
+
+                entity.ToTable("ready_accounts");
+
+                entity.Property(e => e.ReadyAccountId)
+                    .HasColumnName("ready_account_id")
+                    .HasDefaultValueSql("nextval('ready_acc_seq'::regclass)");
+
+                entity.Property(e => e.BirthDate)
+                    .HasColumnName("birth_date")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Login)
+                    .IsRequired()
+                    .HasColumnName("login")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasColumnName("password")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Region)
+                    .IsRequired()
+                    .HasColumnName("region");
+            });
+
+            modelBuilder.HasSequence("account_seq")
+                .HasMax(9999)
+                .IsCyclic();
+
+            modelBuilder.HasSequence("fresh_acc_seq")
+                .HasMax(9999)
+                .IsCyclic();
+
+            modelBuilder.HasSequence("log_id_seq").IsCyclic();
+
+            modelBuilder.HasSequence("ready_acc_seq")
+                .HasMax(9999)
+                .IsCyclic();
+        }
     }
 }
