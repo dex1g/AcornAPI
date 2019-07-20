@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Acorn.DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190720091402_DbMigration")]
+    [Migration("20190720132232_DbMigration")]
     partial class DbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,7 +19,7 @@ namespace Acorn.DAL.Migrations
 
             modelBuilder.Entity("Acorn.BL.Models.Account", b =>
                 {
-                    b.Property<long>("BotId")
+                    b.Property<long>("AccountId")
                         .HasColumnType("INT(3)");
 
                     b.Property<string>("BirthDate")
@@ -28,9 +28,18 @@ namespace Acorn.DAL.Migrations
                         .HasColumnType("DATE")
                         .HasDefaultValueSql("'1970-01-01'");
 
-                    b.Property<int>("ExpPercentage");
+                    b.Property<long>("BotId")
+                        .HasColumnType("INT(3)");
 
-                    b.Property<int>("Level");
+                    b.Property<int>("ExpPercentage")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INT(3)")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<int>("Level")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INT(3)")
+                        .HasDefaultValueSql("0");
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -48,7 +57,9 @@ namespace Acorn.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("VARCHAR(10)");
 
-                    b.HasKey("BotId");
+                    b.HasKey("AccountId");
+
+                    b.HasIndex("BotId");
 
                     b.ToTable("Accounts");
                 });
