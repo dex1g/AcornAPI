@@ -218,7 +218,7 @@ namespace Acorn.DAL
             {
                 _context.Logs.Add(log);
             }
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
 
