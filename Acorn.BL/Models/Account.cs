@@ -6,6 +6,7 @@ namespace Acorn.BL.Models
 {
     public partial class Account
     {
+        public long AccountId { get; set; }
         public long BotId { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }

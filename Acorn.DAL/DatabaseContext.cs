@@ -28,11 +28,16 @@ namespace Acorn.DAL
         {
             modelBuilder.Entity<Account>(entity =>
             {
-                entity.HasKey(e => e.BotId);
+                entity.HasKey(e => e.AccountId);
+
+                entity.Property(e => e.AccountId)
+                    .HasColumnType("INT(3)")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.BotId)
                     .HasColumnType("INT(3)")
-                    .ValueGeneratedNever();
+                    .ValueGeneratedNever()
+                    .IsRequired();
 
                 entity.Property(e => e.Login)
                     .IsRequired()
@@ -49,6 +54,16 @@ namespace Acorn.DAL
                     .HasColumnType("VARCHAR(10)")
                     .HasConversion(v => v.ToString(),
                         v => (Regions)Enum.Parse(typeof(Regions), v));
+
+                entity.Property(e => e.Level)
+                    .HasColumnType("INT(3)")
+                    .IsRequired()
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.ExpPercentage)
+                    .HasColumnType("INT(3)")
+                    .IsRequired()
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.BirthDate)
                     .IsRequired()
