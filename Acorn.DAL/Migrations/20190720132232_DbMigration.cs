@@ -52,17 +52,20 @@ namespace Acorn.DAL.Migrations
                 name: "Accounts",
                 columns: table => new
                 {
+                    AccountId = table.Column<long>(type: "INT(3)", nullable: false),
                     BotId = table.Column<long>(type: "INT(3)", nullable: false),
                     Login = table.Column<string>(type: "VARCHAR(20)", nullable: false, defaultValueSql: "'login'"),
                     Password = table.Column<string>(type: "VARCHAR(25)", nullable: false, defaultValueSql: "'password'"),
                     BirthDate = table.Column<string>(type: "DATE", nullable: false, defaultValueSql: "'1970-01-01'"),
                     Region = table.Column<string>(type: "VARCHAR(10)", nullable: false),
-                    Level = table.Column<int>(nullable: false),
-                    ExpPercentage = table.Column<int>(nullable: false)
+                    Level = table.Column<int>(type: "INT(3)", nullable: false, defaultValueSql: "0")
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ExpPercentage = table.Column<int>(type: "INT(3)", nullable: false, defaultValueSql: "0")
+                        .Annotation("Sqlite:Autoincrement", true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Accounts", x => x.BotId);
+                    table.PrimaryKey("PK_Accounts", x => x.AccountId);
                     table.ForeignKey(
                         name: "FK_Accounts_Bots_BotId",
                         column: x => x.BotId,
@@ -114,6 +117,11 @@ namespace Acorn.DAL.Migrations
                         principalColumn: "BotId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accounts_BotId",
+                table: "Accounts",
+                column: "BotId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Logs_BotId",
