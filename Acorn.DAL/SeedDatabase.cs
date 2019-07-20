@@ -28,7 +28,7 @@ namespace Acorn.DAL
             {
                 BotId = 2,
                 Config = new Config() { OverwriteConfig = false, NoActionTimeout = 1200 },
-                Order = BotOrders.Start
+                BotOrder = BotOrders.Start
             };
 
             _context.Bots.Add(bot1);
@@ -40,7 +40,7 @@ namespace Acorn.DAL
                 Bot = bot1,
                 Login = "maciek76",
                 Password = "qwertz21",
-                BirthDate = new DateTime(1994,11,13),
+                BirthDate = new DateTime(1994, 11, 13),
                 Region = Regions.Eune,
                 Level = 12,
                 ExpPercentage = 57
@@ -51,7 +51,7 @@ namespace Acorn.DAL
                 Bot = bot1,
                 Login = "przemo24",
                 Password = "asdf54",
-                BirthDate = new DateTime(1999,4,23),
+                BirthDate = new DateTime(1999, 4, 23),
                 Region = Regions.Eune,
                 Level = 26,
                 ExpPercentage = 7
@@ -62,7 +62,7 @@ namespace Acorn.DAL
                 Bot = bot2,
                 Login = "cycu547",
                 Password = "dupa123",
-                BirthDate = new DateTime(1997,7,28),
+                BirthDate = new DateTime(1997, 7, 28),
                 Region = Regions.Euw,
                 Level = 18,
                 ExpPercentage = 84
@@ -77,7 +77,7 @@ namespace Acorn.DAL
             {
                 Login = "burek12",
                 Password = "fsd54yf",
-                BirthDate = new DateTime(1997,12,21),
+                BirthDate = new DateTime(1997, 12, 21),
                 Region = Regions.Euw,
             };
 
@@ -85,7 +85,7 @@ namespace Acorn.DAL
             {
                 Login = "manio764",
                 Password = "mrn56i9f",
-                BirthDate = new DateTime(1994,4,3),
+                BirthDate = new DateTime(1994, 4, 3),
                 Region = Regions.Eune,
             };
 

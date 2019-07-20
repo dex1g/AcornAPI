@@ -24,7 +24,7 @@ namespace AcornAPI.Controllers
 
         // PUT: api/Bot/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateBot(uint id, [FromBody]Bot bot)
+        public async Task<ActionResult> UpdateBot(int id, [FromBody]Bot bot)
         {
             bot.BotId = id;
             try
@@ -59,7 +59,7 @@ namespace AcornAPI.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteBot(uint id)
+        public async Task<ActionResult> DeleteBot(int id)
         {
             try
             {
