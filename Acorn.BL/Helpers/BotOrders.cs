@@ -1,10 +1,10 @@
 ﻿namespace Acorn.BL.Helpers
 {
-    enum BotOrders
+    public enum BotOrders
     {
-        START,
-        STOP,
-        RESTART,
-        CHANGEACC
+        Start,
+        Stop,
+        Restart,
+        Reboot
     }
 }

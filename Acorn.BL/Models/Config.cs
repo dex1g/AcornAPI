@@ -9,12 +9,9 @@ namespace Acorn.BL.Models
         public string Queuetype { get; set; }
         public string Aiconfig { get; set; }
         public string Path { get; set; }
-        public string OverwriteConfig { get; set; }
-        public string Champion1 { get; set; }
-        public string Champion2 { get; set; }
-        public string Champion3 { get; set; }
-        public string Champion4 { get; set; }
-        public string Champion5 { get; set; }
+        public bool OverwriteConfig { get; set; }
+        public bool CloseBrowser { get; set; }
+        public int NoActionTimeout { get; set; }
 
         public virtual Bot Bot { get; set; }
     }

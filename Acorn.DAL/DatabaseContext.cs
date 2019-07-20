@@ -1,3 +1,6 @@
+using System;
+using System.Runtime.CompilerServices;
+using Acorn.BL.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Acorn.BL.Models;
 
@@ -6,7 +9,6 @@ namespace Acorn.DAL
     public class DatabaseContext : DbContext
     {
         public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<BotOrder> BotOrders { get; set; }
         public virtual DbSet<Bot> Bots { get; set; }
         public virtual DbSet<Config> Configs { get; set; }
         public virtual DbSet<FreshAccount> FreshAccounts { get; set; }
@@ -32,11 +34,6 @@ namespace Acorn.DAL
                     .HasColumnType("INT(3)")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.BirthDate)
-                    .IsRequired()
-                    .HasColumnType("DATE")
-                    .HasDefaultValueSql("'1970-01-01'");
-
                 entity.Property(e => e.Login)
                     .IsRequired()
                     .HasColumnType("VARCHAR(20)")
@@ -47,29 +44,21 @@ namespace Acorn.DAL
                     .HasColumnType("VARCHAR(25)")
                     .HasDefaultValueSql("'password'");
 
-                entity.HasOne(d => d.Bot)
-                    .WithOne(p => p.Account)
-                    .HasForeignKey<Account>(d => d.BotId)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            modelBuilder.Entity<BotOrder>(entity =>
-            {
-                entity.HasKey(e => e.BotId);
-
-                entity.Property(e => e.BotId)
-                    .HasColumnType("INT(3)")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Order)
+                entity.Property(e => e.Region)
                     .IsRequired()
                     .HasColumnType("VARCHAR(10)")
-                    .HasDefaultValueSql("'STOP'");
+                    .HasConversion(v => v.ToString(),
+                        v => (Regions)Enum.Parse(typeof(Regions), v));
+
+                entity.Property(e => e.BirthDate)
+                    .IsRequired()
+                    .HasColumnType("DATE")
+                    .HasDefaultValueSql("'1970-01-01'");
 
                 entity.HasOne(d => d.Bot)
-                    .WithOne(p => p.BotOrder)
-                    .HasForeignKey<BotOrder>(d => d.BotId)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .WithMany(p => p.Accounts)
+                    .HasForeignKey(d => d.BotId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<Bot>(entity =>
@@ -80,9 +69,12 @@ namespace Acorn.DAL
                     .HasColumnType("INT(3)")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Nick)
+                entity.Property(e => e.Order)
                     .IsRequired()
-                    .HasColumnType("VARCHAR(16)");
+                    .HasColumnType("VARCHAR(10)")
+                    .HasConversion(v => v.ToString(),
+                        v => (BotOrders)Enum.Parse(typeof(BotOrders), v))
+                    .HasDefaultValueSql("'STOP'");
             });
 
             modelBuilder.Entity<Config>(entity =>
@@ -98,32 +90,12 @@ namespace Acorn.DAL
                     .HasColumnType("VARCHAR(20)")
                     .HasDefaultValueSql("'follow'");
 
-                entity.Property(e => e.Champion1)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(20)")
-                    .HasDefaultValueSql("'sivir'");
-
-                entity.Property(e => e.Champion2)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(20)")
-                    .HasDefaultValueSql("'missfortune'");
-
-                entity.Property(e => e.Champion3)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(20)")
-                    .HasDefaultValueSql("'ashe'");
-
-                entity.Property(e => e.Champion4)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(20)")
-                    .HasDefaultValueSql("'lux'");
-
-                entity.Property(e => e.Champion5)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(20)")
-                    .HasDefaultValueSql("'annie'");
-
                 entity.Property(e => e.OverwriteConfig)
+                    .IsRequired()
+                    .HasColumnType("BIT(1)")
+                    .HasDefaultValueSql("1");
+
+                entity.Property(e => e.CloseBrowser)
                     .IsRequired()
                     .HasColumnType("BIT(1)")
                     .HasDefaultValueSql("1");
@@ -138,6 +110,11 @@ namespace Acorn.DAL
                     .HasColumnType("VARCHAR(20)")
                     .HasDefaultValueSql("'intro_bot'");
 
+                entity.Property(e => e.NoActionTimeout)
+                    .IsRequired()
+                    .HasColumnType("INT(6)")
+                    .HasDefaultValueSql("600");
+
                 entity.HasOne(d => d.Bot)
                     .WithOne(p => p.Config)
                     .HasForeignKey<Config>(d => d.BotId)
@@ -150,11 +127,6 @@ namespace Acorn.DAL
 
                 entity.Property(e => e.FreshAccId).ValueGeneratedNever();
 
-                entity.Property(e => e.BirthDate)
-                    .IsRequired()
-                    .HasColumnType("DATE")
-                    .HasDefaultValueSql("'1970-01-01'");
-
                 entity.Property(e => e.Login)
                     .IsRequired()
                     .HasColumnType("VARCHAR(20)");
@@ -162,6 +134,17 @@ namespace Acorn.DAL
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasColumnType("VARCHAR(25)");
+
+                entity.Property(e => e.Region)
+                    .IsRequired()
+                    .HasColumnType("VARCHAR(10)")
+                    .HasConversion(v => v.ToString(),
+                        v => (Regions)Enum.Parse(typeof(Regions), v));
+
+                entity.Property(e => e.BirthDate)
+                    .IsRequired()
+                    .HasColumnType("DATE")
+                    .HasDefaultValueSql("'1970-01-01'");
             });
 
             modelBuilder.Entity<Log>(entity =>
@@ -192,11 +175,6 @@ namespace Acorn.DAL
 
                 entity.Property(e => e.ReadyAccId).ValueGeneratedNever();
 
-                entity.Property(e => e.BirthDate)
-                    .IsRequired()
-                    .HasColumnType("DATE")
-                    .HasDefaultValueSql("'1970-01-01'");
-
                 entity.Property(e => e.Login)
                     .IsRequired()
                     .HasColumnType("VARCHAR(20)");
@@ -204,6 +182,17 @@ namespace Acorn.DAL
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasColumnType("VARCHAR(25)");
+
+                entity.Property(e => e.Region)
+                    .IsRequired()
+                    .HasColumnType("VARCHAR(10)")
+                    .HasConversion(v => v.ToString(),
+                        v => (Regions)Enum.Parse(typeof(Regions), v));
+
+                entity.Property(e => e.BirthDate)
+                    .IsRequired()
+                    .HasColumnType("DATE")
+                    .HasDefaultValueSql("'1970-01-01'");
             });
         }
     }

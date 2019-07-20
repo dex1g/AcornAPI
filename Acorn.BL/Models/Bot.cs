@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Acorn.BL.Helpers;
 
 namespace Acorn.BL.Models
 {
@@ -11,11 +12,9 @@ namespace Acorn.BL.Models
         }
 
         public long BotId { get; set; }
-        public string Nick { get; set; }
-        public byte[] Level { get; set; }
+        public BotOrders Order { get; set; }
 
-        public virtual Account Account { get; set; }
-        public virtual BotOrder BotOrder { get; set; }
+        public virtual ICollection<Account> Accounts { get; set; }
         public virtual Config Config { get; set; }
         public virtual ICollection<Log> Logs { get; set; }
     }

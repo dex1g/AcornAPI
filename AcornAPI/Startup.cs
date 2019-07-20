@@ -31,7 +31,6 @@ namespace AcornAPI
 
             services.AddScoped<IAccountsRepository, AccountsRepository>();
             services.AddScoped<IBotsRepository, BotsRepository>();
-            services.AddScoped<IBotOrdersRepository, BotOrdersRepository>();
             services.AddScoped<IConfigsRepository, ConfigsRepository>();
             services.AddScoped<IFreshAccountsRepository, FreshAccountsRepository>();
             services.AddScoped<ILogsRepository, LogsRepository>();
@@ -39,7 +38,6 @@ namespace AcornAPI
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IBotService, BotService>();
-            services.AddScoped<IBotOrderService, BotOrderService>();
             services.AddScoped<IConfigService, ConfigService>();
             services.AddScoped<IFreshAccountService, FreshAccountService>();
             services.AddScoped<ILogService, LogService>();

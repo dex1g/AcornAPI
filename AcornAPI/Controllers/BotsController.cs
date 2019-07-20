@@ -14,14 +14,11 @@ namespace AcornAPI.Controllers
     {
         private readonly IBotService _botService;
 
-        private readonly IConfigService _configService;
-
         private readonly IMapper _mapper;
 
-        public BotsController(IBotService botService, IConfigService configService, IMapper mapper)
+        public BotsController(IBotService botService, IMapper mapper)
         {
             _botService = botService;
-            _configService = configService;
             _mapper = mapper;
         }
 
@@ -47,11 +44,7 @@ namespace AcornAPI.Controllers
         {
             try
             {
-                Account account = new Account { Bot = bot, BotId = bot.BotId };
-                BotOrder botOrder = new BotOrder { Bot = bot, BotId = bot.BotId };
                 Config botConfig = new Config { Bot = bot, BotId = bot.BotId };
-                bot.Account = account;
-                bot.BotOrder = botOrder;
                 bot.Config = botConfig;
                 await _botService.CreateNewBotAsync(_mapper.Map<Bot>(bot));
                 //await _configService.CreateNewConfigAsync(botConfig);

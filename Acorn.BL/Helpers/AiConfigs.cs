@@ -1,8 +1,7 @@
 ﻿namespace Acorn.BL.Helpers
 {
-    enum AiConfigs
+    public enum AiConfigs
     {
-        FOLLOW,
-        MIDLANER
+        Follow
     }
 }

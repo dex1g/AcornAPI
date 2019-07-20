@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Acorn.DAL.Migrations
 {
@@ -12,8 +11,7 @@ namespace Acorn.DAL.Migrations
                 columns: table => new
                 {
                     BotId = table.Column<long>(type: "INT(3)", nullable: false),
-                    Nick = table.Column<string>(type: "VARCHAR(16)", nullable: false),
-                    Level = table.Column<byte[]>(nullable: true)
+                    Order = table.Column<string>(type: "VARCHAR(10)", nullable: false, defaultValueSql: "'STOP'")
                 },
                 constraints: table =>
                 {
@@ -27,6 +25,7 @@ namespace Acorn.DAL.Migrations
                     FreshAccId = table.Column<long>(nullable: false),
                     Login = table.Column<string>(type: "VARCHAR(20)", nullable: false),
                     Password = table.Column<string>(type: "VARCHAR(25)", nullable: false),
+                    Region = table.Column<string>(type: "VARCHAR(10)", nullable: false),
                     BirthDate = table.Column<string>(type: "DATE", nullable: false, defaultValueSql: "'1970-01-01'")
                 },
                 constraints: table =>
@@ -41,6 +40,7 @@ namespace Acorn.DAL.Migrations
                     ReadyAccId = table.Column<long>(nullable: false),
                     Login = table.Column<string>(type: "VARCHAR(20)", nullable: false),
                     Password = table.Column<string>(type: "VARCHAR(25)", nullable: false),
+                    Region = table.Column<string>(type: "VARCHAR(10)", nullable: false),
                     BirthDate = table.Column<string>(type: "DATE", nullable: false, defaultValueSql: "'1970-01-01'")
                 },
                 constraints: table =>
@@ -55,7 +55,10 @@ namespace Acorn.DAL.Migrations
                     BotId = table.Column<long>(type: "INT(3)", nullable: false),
                     Login = table.Column<string>(type: "VARCHAR(20)", nullable: false, defaultValueSql: "'login'"),
                     Password = table.Column<string>(type: "VARCHAR(25)", nullable: false, defaultValueSql: "'password'"),
-                    BirthDate = table.Column<string>(type: "DATE", nullable: false, defaultValueSql: "'1970-01-01'")
+                    BirthDate = table.Column<string>(type: "DATE", nullable: false, defaultValueSql: "'1970-01-01'"),
+                    Region = table.Column<string>(type: "VARCHAR(10)", nullable: false),
+                    Level = table.Column<int>(nullable: false),
+                    ExpPercentage = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,25 +68,7 @@ namespace Acorn.DAL.Migrations
                         column: x => x.BotId,
                         principalTable: "Bots",
                         principalColumn: "BotId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BotOrders",
-                columns: table => new
-                {
-                    BotId = table.Column<long>(type: "INT(3)", nullable: false),
-                    Order = table.Column<string>(type: "VARCHAR(10)", nullable: false, defaultValueSql: "'STOP'")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BotOrders", x => x.BotId);
-                    table.ForeignKey(
-                        name: "FK_BotOrders_Bots_BotId",
-                        column: x => x.BotId,
-                        principalTable: "Bots",
-                        principalColumn: "BotId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -94,12 +79,10 @@ namespace Acorn.DAL.Migrations
                     Queuetype = table.Column<string>(type: "VARCHAR(20)", nullable: false, defaultValueSql: "'intro_bot'"),
                     Aiconfig = table.Column<string>(type: "VARCHAR(20)", nullable: false, defaultValueSql: "'follow'"),
                     Path = table.Column<string>(type: "VARCHAR(100)", nullable: false, defaultValueSql: "'C:/Riot Games/League of Legends/'"),
-                    OverwriteConfig = table.Column<string>(type: "BIT(1)", nullable: false, defaultValueSql: "1"),
-                    Champion1 = table.Column<string>(type: "VARCHAR(20)", nullable: false, defaultValueSql: "'sivir'"),
-                    Champion2 = table.Column<string>(type: "VARCHAR(20)", nullable: false, defaultValueSql: "'missfortune'"),
-                    Champion3 = table.Column<string>(type: "VARCHAR(20)", nullable: false, defaultValueSql: "'ashe'"),
-                    Champion4 = table.Column<string>(type: "VARCHAR(20)", nullable: false, defaultValueSql: "'lux'"),
-                    Champion5 = table.Column<string>(type: "VARCHAR(20)", nullable: false, defaultValueSql: "'annie'")
+                    OverwriteConfig = table.Column<bool>(type: "BIT(1)", nullable: false, defaultValueSql: "1"),
+                    CloseBrowser = table.Column<bool>(type: "BIT(1)", nullable: false, defaultValueSql: "1"),
+                    NoActionTimeout = table.Column<int>(type: "INT(6)", nullable: false, defaultValueSql: "600")
+                        .Annotation("Sqlite:Autoincrement", true)
                 },
                 constraints: table =>
                 {
@@ -142,9 +125,6 @@ namespace Acorn.DAL.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Accounts");
-
-            migrationBuilder.DropTable(
-                name: "BotOrders");
 
             migrationBuilder.DropTable(
                 name: "Configs");

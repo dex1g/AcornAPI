@@ -6,17 +6,7 @@ namespace Acorn.BL.Validators
     {
         public static bool ValidateDefault(Bot bot)
         {
-            if (bot.BotId > 999)
-            {
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(bot.Nick) || bot.Nick.Length > 20)
-            {
-                return false;
-            }
-
-            return true;
+            return bot.BotId <= 999 && bot.BotId >= 0;
         }
     }
 }

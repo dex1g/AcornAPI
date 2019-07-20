@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Acorn.BL.Helpers;
 
 namespace Acorn.BL.Models
 {
@@ -9,6 +10,9 @@ namespace Acorn.BL.Models
         public string Login { get; set; }
         public string Password { get; set; }
         public string BirthDate { get; set; }
+        public Regions Region { get; set; }
+        public int Level { get; set; }
+        public int ExpPercentage { get; set; }
 
         public virtual Bot Bot { get; set; }
     }
