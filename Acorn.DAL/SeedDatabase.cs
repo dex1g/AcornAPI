@@ -40,7 +40,7 @@ namespace Acorn.DAL
                 Bot = bot1,
                 Login = "maciek76",
                 Password = "qwertz21",
-                BirthDate = "13/11/1994",
+                BirthDate = new DateTime(1994,11,13),
                 Region = Regions.Eune,
                 Level = 12,
                 ExpPercentage = 57
@@ -51,7 +51,7 @@ namespace Acorn.DAL
                 Bot = bot1,
                 Login = "przemo24",
                 Password = "asdf54",
-                BirthDate = "24/04/1999",
+                BirthDate = new DateTime(1999,4,23),
                 Region = Regions.Eune,
                 Level = 26,
                 ExpPercentage = 7
@@ -62,7 +62,7 @@ namespace Acorn.DAL
                 Bot = bot2,
                 Login = "cycu547",
                 Password = "dupa123",
-                BirthDate = "28/07/1997",
+                BirthDate = new DateTime(1997,7,28),
                 Region = Regions.Euw,
                 Level = 18,
                 ExpPercentage = 84
@@ -77,7 +77,7 @@ namespace Acorn.DAL
             {
                 Login = "burek12",
                 Password = "fsd54yf",
-                BirthDate = "21/12/1997",
+                BirthDate = new DateTime(1997,12,21),
                 Region = Regions.Euw,
             };
 
@@ -85,7 +85,7 @@ namespace Acorn.DAL
             {
                 Login = "manio764",
                 Password = "mrn56i9f",
-                BirthDate = "03/04/1994",
+                BirthDate = new DateTime(1994,4,3),
                 Region = Regions.Eune,
             };
 
@@ -93,7 +93,7 @@ namespace Acorn.DAL
             {
                 Login = "suhy666",
                 Password = "raz2trzy",
-                BirthDate = "11/06/1998",
+                BirthDate = new DateTime(1998, 11, 6),
                 Region = Regions.Na,
             };
 
@@ -101,7 +101,7 @@ namespace Acorn.DAL
             {
                 Login = "malaszmula",
                 Password = "krol69lew",
-                BirthDate = "18/05/1992",
+                BirthDate = new DateTime(1992, 5, 18),
                 Region = Regions.Eune,
             };
 
@@ -115,7 +115,7 @@ namespace Acorn.DAL
             {
                 Login = "muli55",
                 Password = "bxcv3567",
-                BirthDate = "11/12/1995",
+                BirthDate = new DateTime(1995, 11, 22),
                 Region = Regions.Eune,
             };
 
@@ -123,7 +123,7 @@ namespace Acorn.DAL
             {
                 Login = "maju44",
                 Password = "44pamietamy",
-                BirthDate = "20/04/1997",
+                BirthDate = new DateTime(1997, 4, 20),
                 Region = Regions.Eune,
             };
 
@@ -131,7 +131,7 @@ namespace Acorn.DAL
             {
                 Login = "zielasz420",
                 Password = "bl4zeit20",
-                BirthDate = "11/02/1995",
+                BirthDate = new DateTime(1995, 2, 21),
                 Region = Regions.Euw,
             };
 
@@ -139,7 +139,7 @@ namespace Acorn.DAL
             {
                 Login = "qbapvpking",
                 Password = "64cobble",
-                BirthDate = "26/10/1991",
+                BirthDate = new DateTime(1991, 2, 12),
                 Region = Regions.Eune,
             };
 
@@ -152,63 +152,63 @@ namespace Acorn.DAL
             var log1 = new Log()
             {
                 Bot = bot1,
-                Date = new DateTime(2019, 07, 20, 15, 20, 34).ToString("dd-MM-yyyy HH-mm-ss"),
+                Date = new DateTime(2019, 07, 20, 15, 20, 34),
                 Status = "Launching league"
             };
 
             var log2 = new Log()
             {
                 Bot = bot1,
-                Date = new DateTime(2019, 07, 20, 15, 20, 50).ToString("dd-MM-yyyy HH-mm-ss"),
+                Date = new DateTime(2019, 07, 20, 15, 20, 50),
                 Status = "Logging in"
             };
 
             var log3 = new Log()
             {
                 Bot = bot1,
-                Date = new DateTime(2019, 07, 20, 15, 21, 03).ToString("dd-MM-yyyy HH-mm-ss"),
+                Date = new DateTime(2019, 07, 20, 15, 21, 03),
                 Status = "Queueing up"
             };
 
             var log4 = new Log()
             {
                 Bot = bot1,
-                Date = new DateTime(2019, 07, 20, 15, 22, 26).ToString("dd-MM-yyyy HH-mm-ss"),
+                Date = new DateTime(2019, 07, 20, 15, 22, 26),
                 Status = "Picking champion"
             };
 
             var log5 = new Log()
             {
                 Bot = bot1,
-                Date = new DateTime(2019, 07, 20, 15, 24, 11).ToString("dd-MM-yyyy HH-mm-ss"),
+                Date = new DateTime(2019, 07, 20, 15, 24, 11),
                 Status = "Starting game script"
             };
 
             var log6 = new Log()
             {
                 Bot = bot2,
-                Date = new DateTime(2019, 07, 20, 17, 06, 15).ToString("dd-MM-yyyy HH-mm-ss"),
+                Date = new DateTime(2019, 07, 20, 17, 06, 15),
                 Status = "Active game detected"
             };
 
             var log7 = new Log()
             {
                 Bot = bot2,
-                Date = new DateTime(2019, 07, 20, 17, 06, 34).ToString("dd-MM-yyyy HH-mm-ss"),
+                Date = new DateTime(2019, 07, 20, 17, 06, 34),
                 Status = "Launching script"
             };
 
             var log8 = new Log()
             {
                 Bot = bot2,
-                Date = new DateTime(2019, 07, 20, 17, 08, 28).ToString("dd-MM-yyyy HH-mm-ss"),
+                Date = new DateTime(2019, 07, 20, 17, 08, 28),
                 Status = "Enemy champion detected"
             };
 
             var log9 = new Log()
             {
                 Bot = bot2,
-                Date = new DateTime(2019, 07, 20, 17, 09, 44).ToString("dd-MM-yyyy HH-mm-ss"),
+                Date = new DateTime(2019, 07, 20, 17, 09, 44),
                 Status = "Bot is low hp. Recalling..."
             };
 

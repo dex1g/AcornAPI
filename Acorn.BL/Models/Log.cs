@@ -8,7 +8,7 @@ namespace Acorn.BL.Models
         public long LogId { get; set; }
         public long BotId { get; set; }
         public string Status { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         public virtual Bot Bot { get; set; }
     }

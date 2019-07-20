@@ -12,7 +12,7 @@ namespace Acorn.BL.Validators
                 return false;
             }
 
-            if (DateTime.Compare(DateTime.Parse(log.Date), DateTime.Now) > 0)
+            if (DateTime.Compare(log.Date, DateTime.Now) > 0)
             {
                 return false;
             }

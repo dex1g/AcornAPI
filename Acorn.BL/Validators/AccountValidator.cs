@@ -17,7 +17,7 @@ namespace Acorn.BL.Validators
                 return false;
             }
 
-            if (DateTime.Compare(DateTime.Parse(account.BirthDate), DateTime.Now) > 0)
+            if (DateTime.Compare(account.BirthDate, DateTime.Now) > 0)
             {
                 return false;
             }

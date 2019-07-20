@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 
 namespace AcornAPI
 {
@@ -27,7 +26,9 @@ namespace AcornAPI
             services.AddAutoMapper();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddEntityFrameworkSqlite().AddDbContext<DatabaseContext>();
+            services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>().BuildServiceProvider();
+            services.AddTransient<SeedDatabase>();
+
 
             services.AddScoped<IAccountsRepository, AccountsRepository>();
             services.AddScoped<IBotsRepository, BotsRepository>();
@@ -45,12 +46,21 @@ namespace AcornAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedDatabase seedDatabase)
         {
             if (env.IsDevelopment())
             {
+                seedDatabase.Seed();
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                );
+
+
 
             app.UseMvc();
         }

@@ -22,7 +22,7 @@ namespace Acorn.DAL.Repositories
             _context.ReadyAccounts.Add(readyAccount);
             await _context.SaveChangesAsync();
 
-            long addedId = readyAccount.ReadyAccId;
+            long addedId = readyAccount.ReadyAccountId;
 
             return addedId;
         }
@@ -49,12 +49,12 @@ namespace Acorn.DAL.Repositories
 
         public async Task<ReadyAccount> GetReadyAccountByIdAsync(long readyAccountId)
         {
-            return await _context.ReadyAccounts.FirstOrDefaultAsync(f => f.ReadyAccId == readyAccountId);
+            return await _context.ReadyAccounts.FirstOrDefaultAsync(f => f.ReadyAccountId == readyAccountId);
         }
 
         public async Task UpdateReadyAccountAsync(ReadyAccount readyAccount)
         {
-            var readyAccountToUpdate = await GetReadyAccountByIdAsync(readyAccount.ReadyAccId);
+            var readyAccountToUpdate = await GetReadyAccountByIdAsync(readyAccount.ReadyAccountId);
 
             if (readyAccountToUpdate != null)
             {
