@@ -13,5 +13,6 @@ namespace Acorn.BL.RepositoriesInterfaces
         Task<IEnumerable<Account>> GetAllAsync();
         Task<IEnumerable<Account>> GetAllByBotIdAsync(long botId);
         Task<Account> GetAccountByIdAsync(long accountId);
+        Task MarkAccountAsDoneAsync(long accountId);
     }
 }

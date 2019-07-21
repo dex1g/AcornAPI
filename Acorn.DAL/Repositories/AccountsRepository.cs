@@ -69,5 +69,21 @@ namespace Acorn.DAL.Repositories
                 throw new InvalidOperationException("Account does not exist");
             }
         }
+
+        public async Task MarkAccountAsDoneAsync(long accountId)
+        {
+            var account = await GetAccountByIdAsync(accountId);
+            if (account != null)
+            {
+                _context.Accounts.Remove(account);
+                var readyAccount = new ReadyAccount() { Login = account.Login, Password = account.Password, Region = account.Region, BirthDate = account.BirthDate };
+                _context.ReadyAccounts.Add(readyAccount);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("Account does not exist");
+            }
+        }
     }
 }

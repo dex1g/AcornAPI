@@ -56,7 +56,7 @@ namespace AcornAPI.Controllers
         }
 
         // GET: api/Logs
-        [HttpGet("{id:int}/latest")]
+        [HttpGet("{id:int}/Latest")]
         public async Task<ActionResult> GetLatestLogByBotId(int id)
         {
             var log = await _logService.GetLatestLogByBotId(id);

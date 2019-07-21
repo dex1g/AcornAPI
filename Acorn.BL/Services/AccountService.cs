@@ -50,5 +50,10 @@ namespace Acorn.BL.Services
 
             await _accountsRepository.UpdateAccountAsync(account);
         }
+
+        public async Task MarkAccountAsDoneAsync(long accountId)
+        {
+            await _accountsRepository.MarkAccountAsDoneAsync(accountId);
+        }
     }
 }

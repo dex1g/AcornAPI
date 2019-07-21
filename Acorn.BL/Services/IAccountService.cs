@@ -13,5 +13,6 @@ namespace Acorn.BL.Services
         Task<IEnumerable<Account>> GetAllAccountsAsync();
         Task<IEnumerable<Account>> GetAllAccountsByBotIdAsync(long botId);
         Task<Account> GetAccountByIdAsync(long accountId);
+        Task MarkAccountAsDoneAsync(long accountId);
     }
 }

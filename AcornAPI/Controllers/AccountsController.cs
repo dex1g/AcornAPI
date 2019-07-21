@@ -100,6 +100,7 @@ namespace AcornAPI.Controllers
                 return NotFound(ex.Message);
             }
         }
+
         // GET: api/Accounts/5
         [HttpGet("Bot/{id:int}")]
         public async Task<ActionResult> GetAllAccountsByBotId(int id)
@@ -111,5 +112,19 @@ namespace AcornAPI.Controllers
             return Ok(accountsToReturn);
         }
 
+        // POST: api/Accounts
+        [HttpPost("{id:int}/MarkAsDone")]
+        public async Task<ActionResult> MarkAccountAsDone(int id)
+        {
+            try
+            {
+                await _accountService.MarkAccountAsDoneAsync(id);
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
