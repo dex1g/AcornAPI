@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace AcornAPI.Configurations
 {
@@ -52,6 +53,20 @@ namespace AcornAPI.Configurations
             _services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(_configuration.GetConnectionString("AcornDatabase")));
 
             _services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>().BuildServiceProvider();
+        }
+
+        public void AddSwagger()
+        {
+            _services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "Acorn API",
+                    Description = "API of the Acorn bot management system"
+                });
+                c.DescribeAllEnumsAsStrings();
+            });
         }
 
         public void AddDatabaseSeed()

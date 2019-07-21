@@ -27,29 +27,13 @@ namespace AcornAPI
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info
-                {
-                    Version = "v1",
-                    Title = "Acorn API",
-                    Description = "API of the Acorn bot management system",
-                    TermsOfService = "None",
-                    Contact = new Contact()
-                    {
-                        Name = "Huan Carlos",
-                        Email = "email@address.com",
-                        Url = "https://github.com/dex1g/"
-                    }
-                });
-                c.DescribeAllEnumsAsStrings();
-            });
-
             moduleConfiguration.AddDatabaseContext();
 
             moduleConfiguration.CreateNpsqlEnumMappings();
 
             moduleConfiguration.ConfigureServices();
+
+            moduleConfiguration.AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
