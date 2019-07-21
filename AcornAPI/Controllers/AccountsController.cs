@@ -5,6 +5,7 @@ using AutoMapper;
 using Acorn.BL.Models;
 using Acorn.BL.Services;
 using AcornAPI.Dtos;
+using AcornAPI.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AcornAPI.Controllers
@@ -100,6 +101,7 @@ namespace AcornAPI.Controllers
                 return NotFound(ex.Message);
             }
         }
+
         // GET: api/Accounts/5
         [HttpGet("Bot/{id:int}")]
         public async Task<ActionResult> GetAllAccountsByBotId(int id)
@@ -111,5 +113,49 @@ namespace AcornAPI.Controllers
             return Ok(accountsToReturn);
         }
 
+        // POST: api/Accounts/5/MarkAsDone
+        [HttpPost("{id:int}/MarkAsDone")]
+        public async Task<ActionResult> MarkAccountAsDone(int id)
+        {
+            try
+            {
+                await _accountService.MarkAccountAsDoneAsync(id);
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // POST: api/Accounts/5/RequestAccount
+        [HttpPost("{id:int}/RequestAccount")]
+        public async Task<ActionResult> RequestAccount(int id, [FromBody]RequestAccountQuery query)
+        {
+            try
+            {
+                await _accountService.RequestAccountAsync(id, query.Region);
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // PATCH: api/Accounts/5
+        [HttpPatch("{id:int}")]
+        public async Task<ActionResult> UpdateLevelingProgress(int id, [FromBody]UpdateLevelingProgressQuery query)
+        {
+            try
+            {
+                await _accountService.UpdateLevelingProgressAsync(id, query.Level, query.ExpPercentage);
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
