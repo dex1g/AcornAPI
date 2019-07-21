@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AcornAPI.Configurations;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace AcornAPI
 {
@@ -25,6 +26,24 @@ namespace AcornAPI
             services.AddAutoMapper(typeof(Startup));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "Acorn API",
+                    Description = "API of the Acorn bot management system",
+                    TermsOfService = "None",
+                    Contact = new Contact()
+                    {
+                        Name = "Huan Carlos",
+                        Email = "email@address.com",
+                        Url = "https://github.com/dex1g/"
+                    }
+                });
+                c.DescribeAllEnumsAsStrings();
+            });
 
             moduleConfiguration.AddDatabaseContext();
 
@@ -48,6 +67,12 @@ namespace AcornAPI
                 );
 
             app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Acorn API V1");
+            });
         }
     }
 }
