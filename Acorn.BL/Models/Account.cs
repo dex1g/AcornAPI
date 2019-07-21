@@ -13,7 +13,6 @@ namespace Acorn.BL.Models
         public Regions Region { get; set; }
         public int Level { get; set; }
         public int ExpPercentage { get; set; }
-
         public virtual Bot Bot { get; set; }
     }
 }

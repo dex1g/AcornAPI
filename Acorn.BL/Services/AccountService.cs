@@ -18,6 +18,11 @@ namespace Acorn.BL.Services
 
         public async Task CreateNewAccountAsync(Account account)
         {
+            if (!AccountValidator.ValidateDefault(account))
+            {
+                throw new InvalidOperationException("Account's validation failed");
+            }
+
             await _accountsRepository.AddAccountAsync(account);
         }
 

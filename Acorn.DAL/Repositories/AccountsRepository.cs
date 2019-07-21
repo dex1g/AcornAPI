@@ -40,9 +40,7 @@ namespace Acorn.DAL.Repositories
 
         public async Task<IEnumerable<Account>> GetAllByBotIdAsync(long botId)
         {
-            var accounts = await _context.Accounts.ToListAsync();
-            var accountsToReturn = accounts.Where(account => account.BotId == botId);
-            return accountsToReturn;
+            return await _context.Accounts.Where(account => account.BotId == botId).ToListAsync();
         }
 
         public async Task<Account> GetAccountByIdAsync(long accountId)
