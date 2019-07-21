@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Acorn.BL.Enums;
 using Acorn.BL.Models;
 using Acorn.BL.RepositoriesInterfaces;
 using Microsoft.EntityFrameworkCore;
@@ -83,6 +84,38 @@ namespace Acorn.DAL.Repositories
             else
             {
                 throw new InvalidOperationException("Account does not exist");
+            }
+        }
+
+        public async Task RequestAccountAsync(int botId, Regions region)
+        {
+            var freshAccount = await _context.FreshAccounts.FirstAsync(x => x.Region == region);
+            if (freshAccount != null)
+            {
+                _context.FreshAccounts.Remove(freshAccount);
+                var account = new Account() { Login = freshAccount.Login, Password = freshAccount.Password, BirthDate = freshAccount.BirthDate, Region = freshAccount.Region, BotId = botId };
+                _context.Accounts.Add(account);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("No FreshAccount with requested region exists");
+            }
+        }
+
+        public async Task UpdateLevelingProgressAsync(int accountId, int level, int expPercentage)
+        {
+            var account = await _context.Accounts.FirstAsync(x => x.AccountId == accountId);
+            if (account != null)
+            {
+                account.Level = level;
+                account.ExpPercentage = expPercentage;
+                _context.Accounts.Update(account);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("No FreshAccount with requested region exists");
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Acorn.BL.Enums;
 using Acorn.BL.Models;
 using Acorn.BL.RepositoriesInterfaces;
 using Acorn.BL.Validators;
@@ -54,6 +55,16 @@ namespace Acorn.BL.Services
         public async Task MarkAccountAsDoneAsync(long accountId)
         {
             await _accountsRepository.MarkAccountAsDoneAsync(accountId);
+        }
+
+        public async Task RequestAccountAsync(int botId, Regions region)
+        {
+            await _accountsRepository.RequestAccountAsync(botId, region);
+        }
+
+        public async Task UpdateLevelingProgressAsync(int accountId, int level, int expPercentage)
+        {
+            await _accountsRepository.UpdateLevelingProgressAsync(accountId, level, expPercentage);
         }
     }
 }
