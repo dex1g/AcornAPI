@@ -21,9 +21,9 @@ namespace Acorn.BL.Services
             await _accountsRepository.AddAccountAsync(account);
         }
 
-        public async Task DeleteAccountAsync(long botId)
+        public async Task DeleteAccountAsync(long accountId)
         {
-            await _accountsRepository.DeleteAccountAsync(botId);
+            await _accountsRepository.DeleteAccountAsync(accountId);
         }
 
         public async Task<IEnumerable<Account>> GetAllAccountsAsync()
@@ -36,9 +36,9 @@ namespace Acorn.BL.Services
             return await _accountsRepository.GetAllByBotIdAsync(botId);
         }
 
-        public async Task<Account> GetAccountByIdAsync(long botId)
+        public async Task<Account> GetAccountByIdAsync(long accountId)
         {
-            return await _accountsRepository.GetAccountByIdAsync(botId);
+            return await _accountsRepository.GetAccountByIdAsync(accountId);
         }
 
         public async Task UpdateAccountAsync(Account account)

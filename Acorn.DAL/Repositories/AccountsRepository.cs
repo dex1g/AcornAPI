@@ -23,9 +23,9 @@ namespace Acorn.DAL.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAccountAsync(long botId)
+        public async Task DeleteAccountAsync(long accountId)
         {
-            var accountToDelete = await GetAccountByIdAsync(botId);
+            var accountToDelete = await GetAccountByIdAsync(accountId);
 
             if (accountToDelete != null)
             {
@@ -45,9 +45,9 @@ namespace Acorn.DAL.Repositories
             return accountsToReturn;
         }
 
-        public async Task<Account> GetAccountByIdAsync(long botId)
+        public async Task<Account> GetAccountByIdAsync(long accountId)
         {
-            return await _context.Accounts.FirstOrDefaultAsync(a => a.BotId == botId);
+            return await _context.Accounts.FirstOrDefaultAsync(a => a.AccountId == accountId);
         }
 
         public async Task<IEnumerable<Account>> GetAllAsync()
@@ -57,7 +57,7 @@ namespace Acorn.DAL.Repositories
 
         public async Task UpdateAccountAsync(Account account)
         {
-            var accountToUpdate = await GetAccountByIdAsync(account.BotId);
+            var accountToUpdate = await GetAccountByIdAsync(account.AccountId);
 
             if (accountToUpdate != null)
             {

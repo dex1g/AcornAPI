@@ -8,10 +8,10 @@ namespace Acorn.BL.Services
     public interface IAccountService
     {
         Task CreateNewAccountAsync(Account account);
-        Task DeleteAccountAsync(long botId);
+        Task DeleteAccountAsync(long accountId);
         Task UpdateAccountAsync(Account account);
         Task<IEnumerable<Account>> GetAllAccountsAsync();
         Task<IEnumerable<Account>> GetAllAccountsByBotIdAsync(long botId);
-        Task<Account> GetAccountByIdAsync(long botId);
+        Task<Account> GetAccountByIdAsync(long accountId);
     }
 }

@@ -86,7 +86,7 @@ namespace AcornAPI.Controllers
         }
 
         // GET: api/Accounts/5
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<AccountDto>> GetAccountById(int id)
         {
             try
@@ -100,5 +100,16 @@ namespace AcornAPI.Controllers
                 return NotFound(ex.Message);
             }
         }
+        // GET: api/Accounts/5
+        [HttpGet("Bot/{id:int}")]
+        public async Task<ActionResult> GetAllAccountsByBotId(int id)
+        {
+            var accounts = await _accountService.GetAllAccountsByBotIdAsync(id);
+
+            var accountsToReturn = _mapper.Map<List<AccountDto>>(accounts);
+
+            return Ok(accountsToReturn);
+        }
+
     }
 }
