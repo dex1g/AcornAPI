@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Acorn.BL.Models;
 using Acorn.BL.Services;
+using AcornAPI.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AcornAPI.Controllers
@@ -24,12 +25,12 @@ namespace AcornAPI.Controllers
 
         // PUT: api/Bot/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateBot(int id, [FromBody]Bot bot)
+        public async Task<ActionResult> UpdateBot(int id, [FromBody]BotDto botDto)
         {
-            bot.BotId = id;
+            botDto.BotId = id;
             try
             {
-                await _botService.UpdateBotAsync(_mapper.Map<Bot>(bot));
+                await _botService.UpdateBotAsync(_mapper.Map<Bot>(botDto));
                 return Ok();
             }
             catch (InvalidOperationException ex)
@@ -40,13 +41,13 @@ namespace AcornAPI.Controllers
 
         // POST: api/Bots
         [HttpPost]
-        public async Task<ActionResult> CreateBot([FromBody]Bot bot)
+        public async Task<ActionResult> CreateBot([FromBody]BotDto botDto)
         {
             try
             {
-                Config botConfig = new Config { Bot = bot, BotId = bot.BotId };
-                bot.Config = botConfig;
-                await _botService.CreateNewBotAsync(_mapper.Map<Bot>(bot));
+                var bot = _mapper.Map<Bot>(botDto);
+                bot.Config = new Config { Bot = bot, BotId = bot.BotId };
+                await _botService.CreateNewBotAsync(bot);
                 //await _configService.CreateNewConfigAsync(botConfig);
                 //return CreatedAtAction(nameof(GetBotById), new { BotId = bot.BotId }, bot);
                 return Ok();
@@ -82,20 +83,20 @@ namespace AcornAPI.Controllers
         {
             var bots = await _botService.GetAllBotsAsync();
 
-            var botsToReturn = _mapper.Map<IEnumerable<Bot>>(bots);
+            var botsToReturn = _mapper.Map<IEnumerable<BotDto>>(bots);
 
             return Ok(botsToReturn);
         }
 
         // GET: api/Bots/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Bot>> GetBotById(uint id)
+        public async Task<ActionResult<BotDto>> GetBotById(int id)
         {
             try
             {
                 var bot = await _botService.GetBotByIdAsync(id);
 
-                return Ok(_mapper.Map<Bot>(bot));
+                return Ok(_mapper.Map<BotDto>(bot));
             }
             catch (InvalidOperationException ex)
             {
