@@ -83,7 +83,7 @@ namespace AcornAPI.Controllers
         {
             var bots = await _botService.GetAllBotsAsync();
 
-            var botsToReturn = _mapper.Map<IEnumerable<BotDto>>(bots);
+            var botsToReturn = _mapper.Map<List<BotDto>>(bots);
 
             return Ok(botsToReturn);
         }
