@@ -11,6 +11,7 @@ namespace Acorn.BL.RepositoriesInterfaces
         Task DeleteAccountAsync(long botId);
         Task UpdateAccountAsync(Account account);
         Task<IEnumerable<Account>> GetAllAsync();
+        Task<IEnumerable<Account>> GetAllByBotIdAsync(long botId);
         Task<Account> GetAccountByIdAsync(long botId);
     }
 }

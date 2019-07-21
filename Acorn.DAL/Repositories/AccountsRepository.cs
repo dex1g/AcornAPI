@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;  
+using System.Linq;
 using System.Threading.Tasks;
 using Acorn.BL.Models;
 using Acorn.BL.RepositoriesInterfaces;
@@ -36,6 +36,13 @@ namespace Acorn.DAL.Repositories
             {
                 throw new InvalidOperationException("Account does not exist");
             }
+        }
+
+        public async Task<IEnumerable<Account>> GetAllByBotIdAsync(long botId)
+        {
+            var accounts = await _context.Accounts.ToListAsync();
+            var accountsToReturn = accounts.Where(account => account.BotId == botId);
+            return accountsToReturn;
         }
 
         public async Task<Account> GetAccountByIdAsync(long botId)

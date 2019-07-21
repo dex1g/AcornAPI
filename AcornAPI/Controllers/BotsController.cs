@@ -23,7 +23,7 @@ namespace AcornAPI.Controllers
             _mapper = mapper;
         }
 
-        // PUT: api/Bot/5
+        // PUT: api/Bots/5
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateBot(int id, [FromBody]BotDto botDto)
         {
@@ -58,7 +58,7 @@ namespace AcornAPI.Controllers
             }
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/Bots/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteBot(int id)
         {

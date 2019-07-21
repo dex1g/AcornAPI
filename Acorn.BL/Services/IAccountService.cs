@@ -11,6 +11,7 @@ namespace Acorn.BL.Services
         Task DeleteAccountAsync(long botId);
         Task UpdateAccountAsync(Account account);
         Task<IEnumerable<Account>> GetAllAccountsAsync();
+        Task<IEnumerable<Account>> GetAllAccountsByBotIdAsync(long botId);
         Task<Account> GetAccountByIdAsync(long botId);
     }
 }

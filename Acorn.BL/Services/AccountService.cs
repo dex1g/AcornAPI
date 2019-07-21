@@ -31,6 +31,11 @@ namespace Acorn.BL.Services
             return await _accountsRepository.GetAllAsync();
         }
 
+        public async Task<IEnumerable<Account>> GetAllAccountsByBotIdAsync(long botId)
+        {
+            return await _accountsRepository.GetAllByBotIdAsync(botId);
+        }
+
         public async Task<Account> GetAccountByIdAsync(long botId)
         {
             return await _accountsRepository.GetAccountByIdAsync(botId);
