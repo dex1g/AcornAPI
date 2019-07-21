@@ -47,9 +47,24 @@ namespace Acorn.DAL.Repositories
             return await _context.Logs.ToListAsync();
         }
 
+        public async Task<IEnumerable<Log>> GetAllByBotId(int botId)
+        {
+            var logs = await GetAllAsync();
+            var botsToReturn = logs.Where(log => log.BotId == botId);
+            return botsToReturn;
+        }
+
         public async Task<Log> GetLogByIdAsync(long logId)
         {
             return await _context.Logs.FirstOrDefaultAsync(l => l.LogId == logId);
+        }
+
+        public async Task<Log> GetLatestLogByBotId(int botId)
+        {
+            var logs = (await GetAllByBotId(botId)).ToArray();
+            var latestDate = logs.Max(x => x.Date);
+            var log = logs.First(x => x.Date == latestDate);
+            return log;
         }
 
         public async Task UpdateLogAsync(Log log)

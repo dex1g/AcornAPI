@@ -12,5 +12,7 @@ namespace Acorn.BL.RepositoriesInterfaces
         Task UpdateLogAsync(Log log);
         Task<IEnumerable<Log>> GetAllAsync();
         Task<Log> GetLogByIdAsync(long logId);
+        Task<IEnumerable<Log>> GetAllByBotId(int botId);
+        Task<Log> GetLatestLogByBotId(int botId);
     }
 }

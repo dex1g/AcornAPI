@@ -11,6 +11,8 @@ namespace Acorn.BL.Services
         Task DeleteLogAsync(long logId);
         Task UpdateLogAsync(Log log);
         Task<IEnumerable<Log>> GetAllLogsAsync();
+        Task<IEnumerable<Log>> GetAllLogsByBotIdAsync(int botId);
         Task<Log> GetLogByIdAsync(long logId);
+        Task<Log> GetLatestLogByBotId(int botId);
     }
 }

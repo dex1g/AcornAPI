@@ -36,9 +36,19 @@ namespace Acorn.BL.Services
             return await _logsRepository.GetAllAsync();
         }
 
+        public async Task<IEnumerable<Log>> GetAllLogsByBotIdAsync(int botId)
+        {
+            return await _logsRepository.GetAllByBotId(botId);
+        }
+
         public async Task<Log> GetLogByIdAsync(long logId)
         {
             return await _logsRepository.GetLogByIdAsync(logId);
+        }
+
+        public async Task<Log> GetLatestLogByBotId(int botId)
+        {
+            return await _logsRepository.GetLatestLogByBotId(botId);
         }
 
         public async Task UpdateLogAsync(Log log)
