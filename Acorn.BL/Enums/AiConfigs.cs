@@ -1,4 +1,4 @@
-﻿namespace Acorn.BL.Helpers
+﻿namespace Acorn.BL.Enums
 {
     public enum AiConfigs
     {

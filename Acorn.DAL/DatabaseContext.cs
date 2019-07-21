@@ -1,4 +1,5 @@
-﻿using Acorn.BL.Models;
+﻿using Acorn.BL.Enums;
+using Acorn.BL.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Acorn.DAL
@@ -21,21 +22,12 @@ namespace Acorn.DAL
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<ReadyAccount> ReadyAccounts { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql("Host=217.61.106.55;Database=acorn;Username=acorn;Password=acorn");
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ForNpgsqlHasEnum(null, "ai_configs", new[] { "Follow" })
-                .ForNpgsqlHasEnum(null, "bot_orders", new[] { "Start", "Stop", "Restart", "Reboot" })
-                .ForNpgsqlHasEnum(null, "queue_types", new[] { "Intro", "Beginner", "Intermediate" })
-                .ForNpgsqlHasEnum(null, "regions", new[] { "Eune", "Euw", "Na" })
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+            modelBuilder.ForNpgsqlHasEnum<AiConfigs>();
+            modelBuilder.ForNpgsqlHasEnum<BotOrders>();
+            modelBuilder.ForNpgsqlHasEnum<QueueTypes>();
+            modelBuilder.ForNpgsqlHasEnum<Regions>();
 
             modelBuilder.Entity<Account>(entity =>
             {
@@ -94,7 +86,7 @@ namespace Acorn.DAL
                 entity.Property(e => e.BotOrder)
                     .IsRequired()
                     .HasColumnName("bot_order")
-                    .HasDefaultValueSql("'Start'::bot_orders");
+                    .HasDefaultValueSql("'start'::bot_orders");
             });
 
             modelBuilder.Entity<Config>(entity =>
@@ -107,7 +99,7 @@ namespace Acorn.DAL
                 entity.Property(e => e.AiConfig)
                     .IsRequired()
                     .HasColumnName("ai_config")
-                    .HasDefaultValueSql("'Follow'::ai_configs");
+                    .HasDefaultValueSql("'follow'::ai_configs");
 
                 entity.Property(e => e.BotId)
                     .HasColumnName("bot_id")
@@ -136,7 +128,7 @@ namespace Acorn.DAL
                 entity.Property(e => e.QueueType)
                     .IsRequired()
                     .HasColumnName("queue_type")
-                    .HasDefaultValueSql("'Intro'::queue_types");
+                    .HasDefaultValueSql("'intro'::queue_types");
 
                 entity.HasOne(d => d.Bot)
                     .WithOne(p => p.Config)

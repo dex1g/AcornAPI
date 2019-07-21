@@ -1,5 +1,5 @@
 ﻿using System;
-using Acorn.BL.Helpers;
+using Acorn.BL.Enums;
 
 namespace Acorn.BL.Models
 {

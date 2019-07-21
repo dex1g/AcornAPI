@@ -1,56 +1,43 @@
 ﻿using AutoMapper;
-using Acorn.BL.RepositoriesInterfaces;
-using Acorn.BL.Services;
-using Acorn.DAL;
-using Acorn.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AcornAPI.Configurations;
 
 namespace AcornAPI
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper();
+            ModuleConfiguration moduleConfiguration = new ModuleConfiguration(services, Configuration);
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>().BuildServiceProvider();
-            services.AddTransient<SeedDatabase>();
 
+            moduleConfiguration.AddDatabaseContext();
 
-            services.AddScoped<IAccountsRepository, AccountsRepository>();
-            services.AddScoped<IBotsRepository, BotsRepository>();
-            services.AddScoped<IConfigsRepository, ConfigsRepository>();
-            services.AddScoped<IFreshAccountsRepository, FreshAccountsRepository>();
-            services.AddScoped<ILogsRepository, LogsRepository>();
-            services.AddScoped<IReadyAccountsRepository, ReadyAccountsRepository>();
+            moduleConfiguration.CreateNpsqlEnumMappings();
 
-            services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IBotService, BotService>();
-            services.AddScoped<IConfigService, ConfigService>();
-            services.AddScoped<IFreshAccountService, FreshAccountService>();
-            services.AddScoped<ILogService, LogService>();
-            services.AddScoped<IReadyAccountService, ReadyAccountService>();
+            moduleConfiguration.ConfigureServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedDatabase seedDatabase)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
-                seedDatabase.Seed();
                 app.UseDeveloperExceptionPage();
             }
 
@@ -59,8 +46,6 @@ namespace AcornAPI
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 );
-
-
 
             app.UseMvc();
         }

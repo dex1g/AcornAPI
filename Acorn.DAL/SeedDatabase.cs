@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Acorn.BL.Helpers;
+using Acorn.BL.Enums;
 using Acorn.BL.Models;
 
 namespace Acorn.DAL
