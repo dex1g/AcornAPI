@@ -38,7 +38,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("Log does not exist");
+                throw new InvalidOperationException(Resources.LogNotExistString);
             }
         }
 
@@ -78,7 +78,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("Log does not exist");
+                throw new InvalidOperationException(Resources.LogNotExistString);
             }
         }
     }

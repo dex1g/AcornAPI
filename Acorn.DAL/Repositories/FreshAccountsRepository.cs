@@ -38,7 +38,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("FreshAccount does not exist");
+                throw new InvalidOperationException(Resources.FreshAccNotExistString);
             }
         }
 
@@ -63,7 +63,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("FreshAccount does not exist");
+                throw new InvalidOperationException(Resources.FreshAccNotExistString);
             }
         }
     }

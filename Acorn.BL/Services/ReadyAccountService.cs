@@ -20,7 +20,7 @@ namespace Acorn.BL.Services
         {
             if (!AccountValidator.ValidateDefault(readyAccount))
             {
-                throw new InvalidOperationException("ReadyAccount's validation failed");
+                throw new InvalidOperationException(Resources.ReadyAccValidFail);
             }
 
             return await _readyAccountsRepository.AddReadyAccountAsync(readyAccount);
@@ -45,7 +45,7 @@ namespace Acorn.BL.Services
         {
             if (!AccountValidator.ValidateDefault(readyAccount))
             {
-                throw new InvalidOperationException("ReadyAccount's validation failed");
+                throw new InvalidOperationException(Resources.ReadyAccValidFail);
             }
 
             await _readyAccountsRepository.UpdateReadyAccountAsync(readyAccount);

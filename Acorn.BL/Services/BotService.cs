@@ -20,7 +20,7 @@ namespace Acorn.BL.Services
         {
             if (!BotValidator.ValidateDefault(bot))
             {
-                throw new InvalidOperationException("Bot's validation failed");
+                throw new InvalidOperationException(Resources.BotValidFailString);
             }
 
             await _botsRepository.AddBotAsync(bot);
@@ -45,7 +45,7 @@ namespace Acorn.BL.Services
         {
             if (!BotValidator.ValidateDefault(bot))
             {
-                throw new InvalidOperationException("Bot's validation failed");
+                throw new InvalidOperationException(Resources.BotValidFailString);
             }
 
             await _botsRepository.UpdateBotAsync(bot);

@@ -21,7 +21,7 @@ namespace Acorn.BL.Services
         {
             if (!AccountValidator.ValidateDefault(account))
             {
-                throw new InvalidOperationException("Account's validation failed");
+                throw new InvalidOperationException(Resources.AccValidFailString);
             }
 
             await _accountsRepository.AddAccountAsync(account);
@@ -51,7 +51,7 @@ namespace Acorn.BL.Services
         {
             if (!AccountValidator.ValidateDefault(account))
             {
-                throw new InvalidOperationException("Account's validation failed");
+                throw new InvalidOperationException(Resources.AccValidFailString);
             }
 
             await _accountsRepository.UpdateAccountAsync(account);

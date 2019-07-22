@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 using Acorn.BL.Enums;
@@ -111,7 +112,7 @@ namespace AcornAPI.Configurations
                         OnTokenValidated = context =>
                         {
                             var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                            var userId = int.Parse(context.Principal.Identity.Name);
+                            var userId = int.Parse(context.Principal.Identity.Name, CultureInfo.InvariantCulture);
                             var user = userService.GetById(userId);
                             if (user == null)
                             {

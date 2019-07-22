@@ -35,7 +35,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("Account does not exist");
+                throw new InvalidOperationException(Resources.AccNotExistString);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("Account does not exist");
+                throw new InvalidOperationException(Resources.AccNotExistString);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("Account does not exist");
+                throw new InvalidOperationException(Resources.AccNotExistString);
             }
         }
 
@@ -97,7 +97,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("No FreshAccount with requested region exists");
+                throw new InvalidOperationException(Resources.NoFreshAccInRegionString);
             }
         }
 
@@ -113,7 +113,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("No FreshAccount with requested region exists");
+                throw new InvalidOperationException(Resources.NoFreshAccInRegionString);
             }
         }
     }

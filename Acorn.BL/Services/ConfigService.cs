@@ -40,7 +40,7 @@ namespace Acorn.BL.Services
         {
             if (!ConfigValidator.ValidateDefault(config))
             {
-                throw new InvalidOperationException("Config's validation failed");
+                throw new InvalidOperationException(Resources.ConfigValidFailString);
             }
 
             await _configsRepository.UpdateConfigAsync(config);

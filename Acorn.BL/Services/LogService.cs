@@ -20,7 +20,7 @@ namespace Acorn.BL.Services
         {
             if (!LogValidator.ValidateDefault(log))
             {
-                throw new InvalidOperationException("Log's validation failed");
+                throw new InvalidOperationException(Resources.LogValidFailString);
             }
 
             return await _logsRepository.AddLogAsync(log);
@@ -55,7 +55,7 @@ namespace Acorn.BL.Services
         {
             if (!LogValidator.ValidateDefault(log))
             {
-                throw new InvalidOperationException("Log's validation failed");
+                throw new InvalidOperationException(Resources.LogValidFailString);
             }
 
             await _logsRepository.UpdateLogAsync(log);

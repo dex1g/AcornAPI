@@ -38,7 +38,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("ReadyAccount does not exist");
+                throw new InvalidOperationException(Resources.ReadyAccNotExistString);
             }
         }
 
@@ -63,7 +63,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("ReadyAccount does not exist");
+                throw new InvalidOperationException(Resources.ReadyAccNotExistString);
             }
         }
     }

@@ -50,10 +50,10 @@ namespace Acorn.BL.Services
         {
             // validation
             if (string.IsNullOrWhiteSpace(password))
-                throw new AuthenticationException("Password is required");
+                throw new AuthenticationException(Resources.PasswordReqString);
 
             if (await _usersRepository.IsUsernameTaken(user.Username))
-                throw new AuthenticationException("Username \"" + user.Username + "\" is already taken");
+                throw new AuthenticationException(Resources.UsernameTakenString, user.Username);
 
             CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
 
@@ -68,13 +68,13 @@ namespace Acorn.BL.Services
             var user = await _usersRepository.GetById(userParam.Id);
 
             if (user == null)
-                throw new AuthenticationException("User not found");
+                throw new AuthenticationException(Resources.UserNotFoundString);
 
             if (userParam.Username != user.Username)
             {
                 // username has changed so check if the new username is already taken
                 if (await _usersRepository.IsUsernameTaken(userParam.Username))
-                    throw new AuthenticationException("Username " + userParam.Username + " is already taken");
+                    throw new AuthenticationException(Resources.UsernameTakenString, userParam.Username);
             }
 
             // update user properties
@@ -104,7 +104,7 @@ namespace Acorn.BL.Services
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null) throw new ArgumentNullException(nameof(password));
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(password));
+            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException(Resources.ValEmptyOrWhitespaceString, nameof(password));
 
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {
@@ -116,9 +116,9 @@ namespace Acorn.BL.Services
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
             if (password == null) throw new ArgumentNullException(nameof(password));
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(password));
-            if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", nameof(storedHash));
-            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", nameof(storedSalt));
+            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException(Resources.ValEmptyOrWhitespaceString, nameof(password));
+            if (storedHash.Length != 64) throw new ArgumentException(Resources.PassHashInvalidLengthString, nameof(storedHash));
+            if (storedSalt.Length != 128) throw new ArgumentException(Resources.PassSaltInvalidLengthString, nameof(storedSalt));
 
             using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
             {

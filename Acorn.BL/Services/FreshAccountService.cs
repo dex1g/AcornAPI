@@ -20,7 +20,7 @@ namespace Acorn.BL.Services
         {
             if (!AccountValidator.ValidateDefault(freshAccount))
             {
-                throw new InvalidOperationException("FreshAccount's validation failed");
+                throw new InvalidOperationException(Resources.FreshAccValidFailString);
             }
 
             return await _freshAccountsRepository.AddFreshAccountAsync(freshAccount);
@@ -45,7 +45,7 @@ namespace Acorn.BL.Services
         {
             if (!AccountValidator.ValidateDefault(freshAccount))
             {
-                throw new InvalidOperationException("FreshAccount's validation failed");
+                throw new InvalidOperationException(Resources.FreshAccValidFailString);
             }
 
             await _freshAccountsRepository.UpdateFreshAccountAsync(freshAccount);

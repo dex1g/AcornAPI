@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using Acorn.BL.Models;
 using Acorn.BL.RepositoriesInterfaces;
@@ -34,7 +35,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("Bot does not exist");
+                throw new InvalidOperationException(Resources.BotNotExistString);
             }
         }
 
@@ -59,7 +60,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("Bot does not exist");
+                throw new InvalidOperationException(Resources.BotNotExistString);
             }
         }
     }

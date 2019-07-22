@@ -34,7 +34,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("Config does not exist");
+                throw new InvalidOperationException(Resources.ConfigNotExistString);
             }
         }
 
@@ -59,7 +59,7 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException("Config does not exist");
+                throw new InvalidOperationException(Resources.ConfigNotExistString);
             }
         }
     }
