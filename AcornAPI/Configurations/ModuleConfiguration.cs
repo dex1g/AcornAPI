@@ -36,6 +36,7 @@ namespace AcornAPI.Configurations
             _services.AddScoped<IFreshAccountsRepository, FreshAccountsRepository>();
             _services.AddScoped<ILogsRepository, LogsRepository>();
             _services.AddScoped<IReadyAccountsRepository, ReadyAccountsRepository>();
+            _services.AddScoped<IUsersRepository, UsersRepository>();
             _services.AddScoped<IAccountService, AccountService>();
             _services.AddScoped<IBotService, BotService>();
             _services.AddScoped<IConfigService, ConfigService>();
