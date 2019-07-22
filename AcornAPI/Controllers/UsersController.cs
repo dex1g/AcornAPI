@@ -9,6 +9,7 @@ using Acorn.BL.Models;
 using Acorn.BL.Services;
 using AcornAPI.Configurations;
 using AcornAPI.Dtos;
+using AcornAPI.Queries;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,7 @@ namespace AcornAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody]UserDto userDto)
+        public async Task<IActionResult> Authenticate([FromBody]LoginQuery userDto)
         {
             var user = await _userService.Authenticate(userDto.Username, userDto.Password);
 

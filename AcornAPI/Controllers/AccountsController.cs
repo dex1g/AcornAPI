@@ -78,7 +78,6 @@ namespace AcornAPI.Controllers
         }
 
         // GET: api/Accounts
-        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult> GetAllAccounts()
         {

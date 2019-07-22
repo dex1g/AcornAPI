@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Acorn.BL.Enums;
 using Acorn.BL.RepositoriesInterfaces;
@@ -71,7 +73,21 @@ namespace AcornAPI.Configurations
                     Title = "Acorn API",
                     Description = "API of the Acorn bot management system"
                 });
+
                 c.DescribeAllEnumsAsStrings();
+
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
+
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Bearer", Array.Empty<string>()},
+                });
             });
         }
 

@@ -22,17 +22,17 @@ namespace AcornAPI
         {
             ModuleConfiguration moduleConfiguration = new ModuleConfiguration(services, Configuration);
 
+            moduleConfiguration.AddDatabaseContext();
+
             services.AddAutoMapper(typeof(Startup));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            moduleConfiguration.AddDatabaseContext();
+            moduleConfiguration.AddJwtAuthentication();
 
             moduleConfiguration.CreateNpsqlEnumMappings();
 
             moduleConfiguration.ConfigureServices();
-
-            moduleConfiguration.AddJwtAuthentication();
 
             moduleConfiguration.AddSwagger();
         }
