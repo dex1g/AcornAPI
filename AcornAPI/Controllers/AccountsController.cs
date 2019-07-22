@@ -6,10 +6,12 @@ using Acorn.BL.Models;
 using Acorn.BL.Services;
 using AcornAPI.Dtos;
 using AcornAPI.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AcornAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
@@ -76,6 +78,7 @@ namespace AcornAPI.Controllers
         }
 
         // GET: api/Accounts
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult> GetAllAccounts()
         {

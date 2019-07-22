@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AcornAPI.Configurations;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace AcornAPI
 {
@@ -33,6 +32,8 @@ namespace AcornAPI
 
             moduleConfiguration.ConfigureServices();
 
+            moduleConfiguration.AddJwtAuthentication();
+
             moduleConfiguration.AddSwagger();
         }
 
@@ -49,6 +50,8 @@ namespace AcornAPI
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 );
+
+            app.UseAuthentication();
 
             app.UseMvc();
 

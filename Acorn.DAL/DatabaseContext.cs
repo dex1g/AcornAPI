@@ -21,6 +21,7 @@ namespace Acorn.DAL
         public virtual DbSet<FreshAccount> FreshAccounts { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<ReadyAccount> ReadyAccounts { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -222,6 +223,39 @@ namespace Acorn.DAL
                     .HasColumnName("region");
             });
 
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                    .HasName("users_pkey");
+
+                entity.ToTable("users");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasDefaultValueSql("nextval('user_seq'::regclass)");
+
+                entity.Property(e => e.FirstName)
+                    .HasColumnName("first_name")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.LastName)
+                    .HasColumnName("last_name")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasColumnName("username")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.PasswordHash)
+                    .IsRequired()
+                    .HasColumnName("password_hash");
+
+                entity.Property(e => e.PasswordSalt)
+                    .IsRequired()
+                    .HasColumnName("password_salt");
+            });
+
             modelBuilder.HasSequence("account_seq")
                 .HasMax(9999)
                 .IsCyclic();
@@ -234,6 +268,9 @@ namespace Acorn.DAL
 
             modelBuilder.HasSequence("ready_acc_seq")
                 .HasMax(9999)
+                .IsCyclic();
+
+            modelBuilder.HasSequence("user_seq")
                 .IsCyclic();
         }
     }

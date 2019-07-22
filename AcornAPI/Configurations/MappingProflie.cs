@@ -16,6 +16,8 @@ namespace AcornAPI.Configurations
             CreateMap<ConfigDto, Config>();
             CreateMap<Log, LogDto>();
             CreateMap<LogDto, Log>();
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
         }
     }
 }

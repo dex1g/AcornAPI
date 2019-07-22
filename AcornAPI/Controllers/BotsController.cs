@@ -5,10 +5,12 @@ using AutoMapper;
 using Acorn.BL.Models;
 using Acorn.BL.Services;
 using AcornAPI.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AcornAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BotsController : ControllerBase

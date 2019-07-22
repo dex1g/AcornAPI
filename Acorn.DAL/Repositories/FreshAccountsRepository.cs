@@ -44,7 +44,6 @@ namespace Acorn.DAL.Repositories
 
         public async Task<IEnumerable<FreshAccount>> GetAllAsync()
         {
-            var freshAccounts = from f in _context.FreshAccounts select f;
             return await _context.FreshAccounts.ToListAsync();
         }
 
