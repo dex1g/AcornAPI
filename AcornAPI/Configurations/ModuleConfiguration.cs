@@ -51,10 +51,10 @@ namespace AcornAPI.Configurations
 
         public void CreateNpsqlEnumMappings()
         {
-            NpgsqlConnection.GlobalTypeMapper.MapEnum<AiConfigs>("ai_configs");
-            NpgsqlConnection.GlobalTypeMapper.MapEnum<BotOrders>("bot_orders");
-            NpgsqlConnection.GlobalTypeMapper.MapEnum<QueueTypes>("queue_types");
-            NpgsqlConnection.GlobalTypeMapper.MapEnum<Regions>("regions");
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<AiConfig>("ai_configs");
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<BotOrder>("bot_orders");
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<QueueType>("queue_types");
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<Region>("regions");
         }
 
         public void AddDatabaseContext()

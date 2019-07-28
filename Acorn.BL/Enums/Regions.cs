@@ -1,6 +1,6 @@
 ﻿namespace Acorn.BL.Enums
 {
-    public enum Regions
+    public enum Region
     {
         Eune,
         Euw,

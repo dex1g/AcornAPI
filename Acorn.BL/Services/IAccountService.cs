@@ -15,7 +15,7 @@ namespace Acorn.BL.Services
         Task<IEnumerable<Account>> GetAllAccountsByBotIdAsync(long botId);
         Task<Account> GetAccountByIdAsync(long accountId);
         Task MarkAccountAsDoneAsync(long accountId);
-        Task RequestAccountAsync(int botId, Regions region);
+        Task RequestAccountAsync(int botId, Region region);
         Task UpdateLevelingProgressAsync(int accountId, int level, int expPercentage);
     }
 }

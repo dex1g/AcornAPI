@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Versioning;
 using System.Threading.Tasks;
+using Acorn.BL.Enums;
 using Acorn.BL.Models;
 using Acorn.BL.RepositoriesInterfaces;
 using Microsoft.EntityFrameworkCore;
@@ -41,7 +41,7 @@ namespace Acorn.DAL.Repositories
 
         public async Task<IEnumerable<Bot>> GetAllAsync()
         {
-            return await _context.Bots.ToListAsync();
+            return await _context.Bots.OrderBy(key => key.BotId).ToListAsync();
         }
 
         public async Task<Bot> GetBotByIdAsync(long botId)
@@ -49,7 +49,7 @@ namespace Acorn.DAL.Repositories
             return await _context.Bots.AsNoTracking().FirstOrDefaultAsync(b => b.BotId == botId);
         }
 
-        public async Task UpdateBotAsync(Bot bot)
+        public async Task<BotOrder> UpdateBotAsync(Bot bot)
         {
             var botToUpdate = await GetBotByIdAsync(bot.BotId);
 
@@ -57,6 +57,7 @@ namespace Acorn.DAL.Repositories
             {
                 _context.Bots.Update(bot);
                 await _context.SaveChangesAsync();
+                return bot.BotOrder;
             }
             else
             {

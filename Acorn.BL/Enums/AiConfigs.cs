@@ -1,6 +1,6 @@
 ﻿namespace Acorn.BL.Enums
 {
-    public enum AiConfigs
+    public enum AiConfig
     {
         Follow
     }

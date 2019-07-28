@@ -1,6 +1,6 @@
 ﻿namespace Acorn.BL.Enums
 {
-    public enum QueueTypes
+    public enum QueueType
     {
         Intro,
         Beginner,

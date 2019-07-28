@@ -8,6 +8,6 @@ namespace AcornAPI.Queries
 {
     public class RequestAccountQuery
     {
-        public Regions Region { get; set; }
+        public Region Region { get; set; }
     }
 }

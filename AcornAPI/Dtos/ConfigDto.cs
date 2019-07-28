@@ -9,8 +9,8 @@ namespace AcornAPI.Dtos
     public class ConfigDto
     {
         public int BotId { get; set; }
-        public QueueTypes QueueType { get; set; }
-        public AiConfigs AiConfig { get; set; }
+        public QueueType QueueType { get; set; }
+        public AiConfig AiConfig { get; set; }
         public string Path { get; set; }
         public bool? OverwriteConfig { get; set; }
         public bool? CloseBrowser { get; set; }

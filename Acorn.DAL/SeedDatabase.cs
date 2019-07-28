@@ -28,7 +28,7 @@ namespace Acorn.DAL
             {
                 BotId = 2,
                 Config = new Config() { OverwriteConfig = false, NoActionTimeout = 1200 },
-                BotOrder = BotOrders.Start
+                BotOrder = BotOrder.Start
             };
 
             _context.Bots.Add(bot1);
@@ -41,7 +41,7 @@ namespace Acorn.DAL
                 Login = "maciek76",
                 Password = "qwertz21",
                 BirthDate = new DateTime(1994, 11, 13),
-                Region = Regions.Eune,
+                Region = Region.Eune,
                 Level = 12,
                 ExpPercentage = 57
             };
@@ -52,7 +52,7 @@ namespace Acorn.DAL
                 Login = "przemo24",
                 Password = "asdf54",
                 BirthDate = new DateTime(1999, 4, 23),
-                Region = Regions.Eune,
+                Region = Region.Eune,
                 Level = 26,
                 ExpPercentage = 7
             };
@@ -63,7 +63,7 @@ namespace Acorn.DAL
                 Login = "cycu547",
                 Password = "dupa123",
                 BirthDate = new DateTime(1997, 7, 28),
-                Region = Regions.Euw,
+                Region = Region.Euw,
                 Level = 18,
                 ExpPercentage = 84
             };
@@ -78,7 +78,7 @@ namespace Acorn.DAL
                 Login = "burek12",
                 Password = "fsd54yf",
                 BirthDate = new DateTime(1997, 12, 21),
-                Region = Regions.Euw,
+                Region = Region.Euw,
             };
 
             var freshAcc2 = new FreshAccount()
@@ -86,7 +86,7 @@ namespace Acorn.DAL
                 Login = "manio764",
                 Password = "mrn56i9f",
                 BirthDate = new DateTime(1994, 4, 3),
-                Region = Regions.Eune,
+                Region = Region.Eune,
             };
 
             var freshAcc3 = new FreshAccount()
@@ -94,7 +94,7 @@ namespace Acorn.DAL
                 Login = "suhy666",
                 Password = "raz2trzy",
                 BirthDate = new DateTime(1998, 11, 6),
-                Region = Regions.Na,
+                Region = Region.Na,
             };
 
             var freshAcc4 = new FreshAccount()
@@ -102,7 +102,7 @@ namespace Acorn.DAL
                 Login = "malaszmula",
                 Password = "krol69lew",
                 BirthDate = new DateTime(1992, 5, 18),
-                Region = Regions.Eune,
+                Region = Region.Eune,
             };
 
             _context.FreshAccounts.Add(freshAcc1);
@@ -116,7 +116,7 @@ namespace Acorn.DAL
                 Login = "muli55",
                 Password = "bxcv3567",
                 BirthDate = new DateTime(1995, 11, 22),
-                Region = Regions.Eune,
+                Region = Region.Eune,
             };
 
             var rdyAcc2 = new ReadyAccount()
@@ -124,7 +124,7 @@ namespace Acorn.DAL
                 Login = "maju44",
                 Password = "44pamietamy",
                 BirthDate = new DateTime(1997, 4, 20),
-                Region = Regions.Eune,
+                Region = Region.Eune,
             };
 
             var rdyAcc3 = new ReadyAccount()
@@ -132,7 +132,7 @@ namespace Acorn.DAL
                 Login = "zielasz420",
                 Password = "bl4zeit20",
                 BirthDate = new DateTime(1995, 2, 21),
-                Region = Regions.Euw,
+                Region = Region.Euw,
             };
 
             var rdyAcc4 = new ReadyAccount()
@@ -140,7 +140,7 @@ namespace Acorn.DAL
                 Login = "qbapvpking",
                 Password = "64cobble",
                 BirthDate = new DateTime(1991, 2, 12),
-                Region = Regions.Eune,
+                Region = Region.Eune,
             };
 
             _context.ReadyAccounts.Add(rdyAcc1);

@@ -85,7 +85,7 @@ namespace Acorn.DAL.Repositories
             }
         }
 
-        public async Task RequestAccountAsync(int botId, Regions region)
+        public async Task RequestAccountAsync(int botId, Region region)
         {
             var freshAccount = await _context.FreshAccounts.FirstAsync(x => x.Region == region);
             if (freshAccount != null)

@@ -1,6 +1,6 @@
 ﻿namespace Acorn.BL.Enums
 {
-    public enum BotOrders
+    public enum BotOrder
     {
         Start,
         Stop,

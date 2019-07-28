@@ -7,6 +7,7 @@ using Acorn.BL.Services;
 using AcornAPI.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Acorn.BL.Enums;
 
 namespace AcornAPI.Controllers
 {
@@ -32,8 +33,8 @@ namespace AcornAPI.Controllers
             botDto.BotId = id;
             try
             {
-                await _botService.UpdateBotAsync(_mapper.Map<Bot>(botDto));
-                return Ok();
+                BotOrder updatedBotStatus = await _botService.UpdateBotAsync(_mapper.Map<Bot>(botDto));
+                return Ok(updatedBotStatus);
             }
             catch (InvalidOperationException ex)
             {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Acorn.BL.Enums;
 using Acorn.BL.Models;
 
 
@@ -9,7 +10,7 @@ namespace Acorn.BL.RepositoriesInterfaces
     {
         Task AddBotAsync(Bot bot);
         Task DeleteBotAsync(long botId);
-        Task UpdateBotAsync(Bot bot);
+        Task<BotOrder> UpdateBotAsync(Bot bot);
         Task<IEnumerable<Bot>> GetAllAsync();
         Task<Bot> GetBotByIdAsync(long botId);
     }

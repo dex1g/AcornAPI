@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Acorn.BL.Enums;
 using Acorn.BL.Models;
 using Acorn.BL.RepositoriesInterfaces;
 using Acorn.BL.Validators;
@@ -41,14 +42,14 @@ namespace Acorn.BL.Services
             return await _botsRepository.GetBotByIdAsync(botId);
         }
 
-        public async Task UpdateBotAsync(Bot bot)
+        public async Task<BotOrder> UpdateBotAsync(Bot bot)
         {
             if (!BotValidator.ValidateDefault(bot))
             {
                 throw new InvalidOperationException(Resources.BotValidFailString);
             }
 
-            await _botsRepository.UpdateBotAsync(bot);
+            return await _botsRepository.UpdateBotAsync(bot);
         }
     }
 }

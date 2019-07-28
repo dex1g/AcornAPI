@@ -62,7 +62,7 @@ namespace Acorn.BL.Services
             await _accountsRepository.MarkAccountAsDoneAsync(accountId);
         }
 
-        public async Task RequestAccountAsync(int botId, Regions region)
+        public async Task RequestAccountAsync(int botId, Region region)
         {
             await _accountsRepository.RequestAccountAsync(botId, region);
         }

@@ -25,10 +25,10 @@ namespace Acorn.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ForNpgsqlHasEnum<AiConfigs>();
-            modelBuilder.ForNpgsqlHasEnum<BotOrders>();
-            modelBuilder.ForNpgsqlHasEnum<QueueTypes>();
-            modelBuilder.ForNpgsqlHasEnum<Regions>();
+            modelBuilder.ForNpgsqlHasEnum<AiConfig>();
+            modelBuilder.ForNpgsqlHasEnum<BotOrder>();
+            modelBuilder.ForNpgsqlHasEnum<QueueType>();
+            modelBuilder.ForNpgsqlHasEnum<Region>();
 
             modelBuilder.Entity<Account>(entity =>
             {
