@@ -24,7 +24,7 @@ namespace Acorn.DAL.Repositories
 
         public async Task DeleteConfigAsync(long botId)
         {
-            var configToDelete = await GetConfigByIdAsync(botId);
+            var configToDelete = await _context.Configs.FirstOrDefaultAsync(c => c.BotId == botId);
 
             if (configToDelete != null)
             {

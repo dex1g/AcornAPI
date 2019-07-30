@@ -130,8 +130,8 @@ namespace AcornAPI.Controllers
             }
         }
 
-        // POST: api/Accounts/5/RequestAccount
-        [HttpPost("{id:int}/RequestAccount")]
+        // POST: api/Accounts/Bot/5/RequestAccount
+        [HttpPost("Bot/{id:int}/RequestAccount")]
         public async Task<ActionResult> RequestAccount(int id, [FromBody]RequestAccountQuery query)
         {
             try

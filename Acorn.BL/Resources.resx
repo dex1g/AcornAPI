@@ -153,4 +153,7 @@
   <data name="ValEmptyOrWhitespaceString" xml:space="preserve">
     <value>Value cannot be empty or whitespace only string</value>
   </data>
+  <data name="BotNotExist" xml:space="preserve">
+    <value>Bot with ID = {0} doesn't exist</value>
+  </data>
 </root>

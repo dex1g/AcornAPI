@@ -26,7 +26,7 @@ namespace Acorn.DAL.Repositories
 
         public async Task DeleteBotAsync(long botId)
         {
-            var botToDelete = await GetBotByIdAsync(botId);
+            var botToDelete = await _context.Bots.FirstOrDefaultAsync(b => b.BotId == botId);
 
             if (botToDelete != null)
             {
@@ -51,9 +51,9 @@ namespace Acorn.DAL.Repositories
 
         public async Task<BotOrder> UpdateBotAsync(Bot bot)
         {
-            var botToUpdate = await GetBotByIdAsync(bot.BotId);
+            var exists = await _context.Bots.AnyAsync(b => b.BotId == bot.BotId);
 
-            if (botToUpdate != null)
+            if (exists)
             {
                 _context.Bots.Update(bot);
                 await _context.SaveChangesAsync();

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Acorn.BL.Models;
 using Acorn.BL.RepositoriesInterfaces;
@@ -29,7 +28,7 @@ namespace Acorn.DAL.Repositories
 
         public async Task DeleteReadyAccountAsync(long readyAccountId)
         {
-            var readyAccountToDelete = await GetReadyAccountByIdAsync(readyAccountId);
+            var readyAccountToDelete = await _context.ReadyAccounts.FirstOrDefaultAsync(f => f.ReadyAccountId == readyAccountId);
 
             if (readyAccountToDelete != null)
             {
@@ -54,11 +53,11 @@ namespace Acorn.DAL.Repositories
 
         public async Task UpdateReadyAccountAsync(ReadyAccount readyAccount)
         {
-            var readyAccountToUpdate = await GetReadyAccountByIdAsync(readyAccount.ReadyAccountId);
+            var exists = await _context.ReadyAccounts.AnyAsync(f => f.ReadyAccountId == readyAccount.ReadyAccountId);
 
-            if (readyAccountToUpdate != null)
+            if (exists)
             {
-                _context.Update(readyAccount);
+                _context.ReadyAccounts.Update(readyAccount);
                 await _context.SaveChangesAsync();
             }
             else

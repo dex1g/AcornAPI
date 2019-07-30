@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Acorn.BL.Models;
@@ -29,7 +30,7 @@ namespace Acorn.DAL.Repositories
 
         public async Task DeleteLogAsync(long logId)
         {
-            var logToDelete = await GetLogByIdAsync(logId);
+            var logToDelete = await _context.Logs.FirstOrDefaultAsync(l => l.LogId == logId);
 
             if (logToDelete != null)
             {
@@ -49,8 +50,7 @@ namespace Acorn.DAL.Repositories
 
         public async Task<IEnumerable<Log>> GetAllByBotId(int botId)
         {
-            var logs = await GetAllAsync();
-            var botsToReturn = logs.Where(log => log.BotId == botId);
+            var botsToReturn = await _context.Logs.Where(log => log.BotId == botId).OrderByDescending(l => l.Date).ToListAsync();
             return botsToReturn;
         }
 
@@ -61,19 +61,19 @@ namespace Acorn.DAL.Repositories
 
         public async Task<Log> GetLatestLogByBotId(int botId)
         {
-            var logs = (await GetAllByBotId(botId)).ToArray();
-            var latestDate = logs.Max(x => x.Date);
-            var log = logs.First(x => x.Date == latestDate);
-            return log;
+            var botExists = await _context.Bots.AnyAsync(b => b.BotId == botId);
+            if (!botExists)
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, Resources.BotNotExistString, botId));
+            return await _context.Logs.Where(l => l.BotId == botId).OrderByDescending(x => x.Date).FirstOrDefaultAsync();
         }
 
         public async Task UpdateLogAsync(Log log)
         {
-            var logToUpdate = await GetLogByIdAsync(log.LogId);
+            var exists = await _context.Logs.AnyAsync(l => l.LogId == log.LogId);
 
-            if (logToUpdate != null)
+            if (exists)
             {
-                _context.Update(log);
+                _context.Logs.Update(log);
                 await _context.SaveChangesAsync();
             }
             else

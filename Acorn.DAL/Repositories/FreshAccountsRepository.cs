@@ -53,11 +53,11 @@ namespace Acorn.DAL.Repositories
 
         public async Task UpdateFreshAccountAsync(FreshAccount freshAccount)
         {
-            var freshAccountToUpdate = await GetFreshAccountByIdAsync(freshAccount.FreshAccountId);
+            var exists = await _context.FreshAccounts.AnyAsync(f => f.FreshAccountId == freshAccount.FreshAccountId);
 
-            if (freshAccountToUpdate != null)
+            if (exists)
             {
-                _context.Update(freshAccount);
+                _context.FreshAccounts.Update(freshAccount);
                 await _context.SaveChangesAsync();
             }
             else

@@ -70,6 +70,15 @@ namespace Acorn.BL {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bot with ID = {0} doesn&apos;t exist.
+        /// </summary>
+        internal static string BotNotExist {
+            get {
+                return ResourceManager.GetString("BotNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bot&apos;s validation failed.
         /// </summary>
         internal static string BotValidFailString {
