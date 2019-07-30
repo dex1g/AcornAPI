@@ -4,6 +4,7 @@
     {
         Start,
         Stop,
+        Kill,
         Restart,
         Reboot
     }
