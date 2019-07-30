@@ -84,11 +84,18 @@ namespace AcornAPI.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllBots()
         {
-            var bots = await _botService.GetAllBotsAsync();
+            try
+            {
+                var bots = await _botService.GetAllBotsAsync();
 
-            var botsToReturn = _mapper.Map<List<BotDto>>(bots);
+                var botsToReturn = _mapper.Map<List<BotDto>>(bots);
 
-            return Ok(botsToReturn);
+                return Ok(botsToReturn);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET: api/Bots/5

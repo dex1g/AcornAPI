@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Acorn.BL.Models;
 using Acorn.BL.Services;
+using AcornAPI.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 
 namespace AcornAPI.Controllers
 {
@@ -13,10 +16,12 @@ namespace AcornAPI.Controllers
     public class LogsController : ControllerBase
     {
         private readonly ILogService _logService;
+        private readonly IMapper _mapper;
 
-        public LogsController(ILogService logService)
+        public LogsController(ILogService logService, IMapper mapper)
         {
             _logService = logService;
+            _mapper = mapper;
         }
 
         // POST: api/Logs
@@ -57,9 +62,15 @@ namespace AcornAPI.Controllers
         [HttpGet("{id:int}/Latest")]
         public async Task<ActionResult> GetLatestLogByBotId(int id)
         {
-            var log = await _logService.GetLatestLogByBotId(id);
-
-            return Ok(log);
+            try
+            {
+                var log = await _logService.GetLatestLogByBotId(id);
+                return Ok(_mapper.Map<LogDto>(log));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET: api/Logs/5
@@ -69,8 +80,8 @@ namespace AcornAPI.Controllers
             try
             {
                 var logs = await _logService.GetAllLogsByBotIdAsync(id);
-
-                return Ok(logs);
+                var logsToReturn = _mapper.Map<List<LogDto>>(logs);
+                return Ok(logsToReturn);
             }
             catch (InvalidOperationException ex)
             {

@@ -74,9 +74,16 @@ namespace AcornAPI.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllFreshAccounts()
         {
-            var freshAccounts = await _freshAccountService.GetAllFreshAccountsAsync();
+            try
+            {
+                var freshAccounts = await _freshAccountService.GetAllFreshAccountsAsync();
 
-            return Ok(freshAccounts);
+                return Ok(freshAccounts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET: api/FreshAccounts/5
