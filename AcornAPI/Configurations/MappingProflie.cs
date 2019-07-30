@@ -1,5 +1,6 @@
 ﻿using Acorn.BL.Models;
 using AcornAPI.Dtos;
+using AcornAPI.Queries;
 using AutoMapper;
 
 namespace AcornAPI.Configurations
@@ -16,8 +17,11 @@ namespace AcornAPI.Configurations
             CreateMap<ConfigDto, Config>();
             CreateMap<Log, LogDto>();
             CreateMap<LogDto, Log>();
+            CreateMap<User, RegisterQuery>();
+            CreateMap<RegisterQuery, User>();
             CreateMap<User, UserDto>();
-            CreateMap<UserDto, User>();
+            CreateMap<FreshAccount, Account>();
+            CreateMap<Account, ReadyAccount>();
         }
     }
 }

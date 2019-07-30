@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Acorn.BL.Models;
 using Acorn.BL.RepositoriesInterfaces;
@@ -50,11 +49,11 @@ namespace Acorn.DAL.Repositories
 
         public async Task UpdateConfigAsync(Config config)
         {
-            var configToUpdate = await GetConfigByIdAsync(config.BotId);
+            var exists = await _context.Configs.AnyAsync(c => c.BotId == config.BotId);
 
-            if (configToUpdate != null)
+            if (exists)
             {
-                _context.Update(config);
+                _context.Configs.Update(config);
                 await _context.SaveChangesAsync();
             }
             else

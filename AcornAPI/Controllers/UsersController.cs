@@ -62,27 +62,20 @@ namespace AcornAPI.Controllers
             var tokenString = tokenHandler.WriteToken(token);
 
             // return basic user info (without password) and token to store client side
-            return Ok(new
-            {
-                Id = user.Id,
-                Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Token = tokenString
-            });
+            return Ok(new { User = _mapper.Map<UserDto>(user), token = tokenString });
         }
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody]UserDto userDto)
+        public async Task<IActionResult> Register([FromBody]RegisterQuery registerQuery)
         {
             // map dto to entity
-            var user = _mapper.Map<User>(userDto);
+            var user = _mapper.Map<User>(registerQuery);
 
             try
             {
                 // save 
-                await _userService.Create(user, userDto.Password);
+                await _userService.Create(user, registerQuery.Password);
                 return Ok();
             }
             catch (AuthenticationException ex)
@@ -96,7 +89,7 @@ namespace AcornAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var users = await _userService.GetAll();
-            var userDtos = _mapper.Map<IList<UserDto>>(users);
+            var userDtos = _mapper.Map<IList<RegisterQuery>>(users);
             return Ok(userDtos);
         }
 
@@ -104,21 +97,21 @@ namespace AcornAPI.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var user = await _userService.GetById(id);
-            var userDto = _mapper.Map<UserDto>(user);
+            var userDto = _mapper.Map<RegisterQuery>(user);
             return Ok(userDto);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody]UserDto userDto)
+        public async Task<IActionResult> Update(int id, [FromBody]RegisterQuery registerQuery)
         {
             // map dto to entity and set id
-            var user = _mapper.Map<User>(userDto);
+            var user = _mapper.Map<User>(registerQuery);
             user.Id = id;
 
             try
             {
                 // save 
-                await _userService.Update(user, userDto.Password);
+                await _userService.Update(user, registerQuery.Password);
                 return Ok();
             }
             catch (AuthenticationException ex)

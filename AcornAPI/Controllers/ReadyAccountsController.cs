@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using Acorn.BL.Models;
 using Acorn.BL.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -15,12 +14,9 @@ namespace AcornAPI.Controllers
     {
         private readonly IReadyAccountService _readyAccountService;
 
-        private readonly IMapper _mapper;
-
-        public ReadyAccountsController(IReadyAccountService readyAccountService, IMapper mapper)
+        public ReadyAccountsController(IReadyAccountService readyAccountService)
         {
             _readyAccountService = readyAccountService;
-            _mapper = mapper;
         }
 
         // PUT: api/ReadyAccounts/5

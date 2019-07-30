@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using Acorn.BL.Models;
 using Acorn.BL.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -15,12 +14,9 @@ namespace AcornAPI.Controllers
     {
         private readonly ILogService _logService;
 
-        private readonly IMapper _mapper;
-
-        public LogsController(ILogService logService, IMapper mapper)
+        public LogsController(ILogService logService)
         {
             _logService = logService;
-            _mapper = mapper;
         }
 
         // POST: api/Logs

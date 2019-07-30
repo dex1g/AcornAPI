@@ -75,7 +75,7 @@ namespace Acorn.DAL.Repositories
             if (account != null)
             {
                 _context.Accounts.Remove(account);
-                var readyAccount = new ReadyAccount() { Login = account.Login, Password = account.Password, Region = account.Region, BirthDate = account.BirthDate };
+                var readyAccount = new ReadyAccount { Login = account.Login, Password = account.Password, Region = account.Region, BirthDate = account.BirthDate };
                 _context.ReadyAccounts.Add(readyAccount);
                 await _context.SaveChangesAsync();
             }
@@ -91,7 +91,7 @@ namespace Acorn.DAL.Repositories
             if (freshAccount != null)
             {
                 _context.FreshAccounts.Remove(freshAccount);
-                var account = new Account() { Login = freshAccount.Login, Password = freshAccount.Password, BirthDate = freshAccount.BirthDate, Region = freshAccount.Region, BotId = botId };
+                var account = new Account { Login = freshAccount.Login, Password = freshAccount.Password, BirthDate = freshAccount.BirthDate, Region = freshAccount.Region, BotId = botId };
                 _context.Accounts.Add(account);
                 await _context.SaveChangesAsync();
             }
