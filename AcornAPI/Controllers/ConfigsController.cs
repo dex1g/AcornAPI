@@ -24,11 +24,10 @@ namespace AcornAPI.Controllers
             _mapper = mapper;
         }
 
-        // PUT: api/Configs/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateConfig(int id, [FromBody]ConfigDto configDto)
+        // PUT: api/Configs
+        [HttpPut]
+        public async Task<ActionResult> UpdateConfig([FromBody]ConfigDto configDto)
         {
-            configDto.BotId = id;
             try
             {
                 await _configService.UpdateConfigAsync(_mapper.Map<Config>(configDto));
