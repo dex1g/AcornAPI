@@ -8,7 +8,7 @@ namespace Acorn.BL.RepositoriesInterfaces
 {
     public interface IAccountsRepository
     {
-        Task AddAccountAsync(Account account);
+        Task<Account> AddAccountAsync(Account account);
         Task DeleteAccountAsync(long accountId);
         Task UpdateAccountAsync(Account account);
         Task<IEnumerable<Account>> GetAllAsync();

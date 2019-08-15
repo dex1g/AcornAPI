@@ -48,9 +48,8 @@ namespace AcornAPI.Controllers
         {
             try
             {
-                await _accountService.CreateNewAccountAsync(_mapper.Map<Account>(accountDto));
-                //return CreatedAtAction(nameof(GetAccountById), new { AccountId = account.AccountId }, account);
-                return Ok();
+                Account insertedAccount = await _accountService.CreateNewAccountAsync(_mapper.Map<Account>(accountDto));
+                return Ok(insertedAccount);
             }
             catch (InvalidOperationException ex)
             {

@@ -17,14 +17,14 @@ namespace Acorn.BL.Services
             _accountsRepository = accountsRepository;
         }
 
-        public async Task CreateNewAccountAsync(Account account)
+        public async Task<Account> CreateNewAccountAsync(Account account)
         {
             if (!AccountValidator.ValidateDefault(account))
             {
                 throw new InvalidOperationException(Resources.AccValidFailString);
             }
 
-            await _accountsRepository.AddAccountAsync(account);
+            return await _accountsRepository.AddAccountAsync(account);
         }
 
         public async Task DeleteAccountAsync(long accountId)

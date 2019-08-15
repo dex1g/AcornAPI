@@ -21,10 +21,11 @@ namespace Acorn.DAL.Repositories
             _mapper = mapper;
         }
 
-        public async Task AddAccountAsync(Account account)
+        public async Task<Account> AddAccountAsync(Account account)
         {
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
+            return account;
         }
 
         public async Task DeleteAccountAsync(long accountId)
