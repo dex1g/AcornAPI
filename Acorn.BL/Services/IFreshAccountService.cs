@@ -7,7 +7,7 @@ namespace Acorn.BL.Services
 {
     public interface IFreshAccountService
     {
-        Task<long> CreateNewFreshAccountAsync(FreshAccount freshAccount);
+        Task<FreshAccount> CreateNewFreshAccountAsync(FreshAccount freshAccount);
         Task DeleteFreshAccountAsync(long freshAccountId);
         Task UpdateFreshAccountAsync(FreshAccount freshAccount);
         Task<IEnumerable<FreshAccount>> GetAllFreshAccountsAsync();

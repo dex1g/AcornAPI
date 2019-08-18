@@ -16,14 +16,11 @@ namespace Acorn.DAL.Repositories
             _context = context;
         }
 
-        public async Task<long> AddFreshAccountAsync(FreshAccount freshAccount)
+        public async Task<FreshAccount> AddFreshAccountAsync(FreshAccount freshAccount)
         {
             _context.FreshAccounts.Add(freshAccount);
             await _context.SaveChangesAsync();
-
-            long addedId = freshAccount.FreshAccountId;
-
-            return addedId;
+            return freshAccount;
         }
 
         public async Task DeleteFreshAccountAsync(long freshAccountId)

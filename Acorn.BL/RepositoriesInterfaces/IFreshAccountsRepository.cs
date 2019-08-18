@@ -7,7 +7,7 @@ namespace Acorn.BL.RepositoriesInterfaces
 {
     public interface IFreshAccountsRepository
     {
-        Task<long> AddFreshAccountAsync(FreshAccount freshAccount);
+        Task<FreshAccount> AddFreshAccountAsync(FreshAccount freshAccount);
         Task DeleteFreshAccountAsync(long freshAccountId);
         Task UpdateFreshAccountAsync(FreshAccount freshAccount);
         Task<IEnumerable<FreshAccount>> GetAllAsync();

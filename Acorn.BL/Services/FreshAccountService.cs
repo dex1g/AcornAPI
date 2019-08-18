@@ -16,7 +16,7 @@ namespace Acorn.BL.Services
             _freshAccountsRepository = freshAccountsRepository;
         }
 
-        public async Task<long> CreateNewFreshAccountAsync(FreshAccount freshAccount)
+        public async Task<FreshAccount> CreateNewFreshAccountAsync(FreshAccount freshAccount)
         {
             if (!AccountValidator.ValidateDefault(freshAccount))
             {

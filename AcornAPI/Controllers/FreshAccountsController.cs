@@ -41,9 +41,8 @@ namespace AcornAPI.Controllers
         {
             try
             {
-                await _freshAccountService.CreateNewFreshAccountAsync(freshAccount);
-                //return CreatedAtAction(nameof(GetFreshAccountById), new { FreshAccountId = freshaccount.FreshAccountId }, freshAccount);
-                return Ok();
+                FreshAccount insertedAccount = await _freshAccountService.CreateNewFreshAccountAsync(freshAccount);
+                return Ok(insertedAccount);
             }
             catch (InvalidOperationException ex)
             {

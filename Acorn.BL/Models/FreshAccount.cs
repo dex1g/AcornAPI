@@ -7,6 +7,7 @@ namespace Acorn.BL.Models
 {
     public partial class FreshAccount
     {
+        [JsonProperty(PropertyName = "accountId")]
         public long FreshAccountId { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
