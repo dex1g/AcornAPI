@@ -7,7 +7,6 @@ using Acorn.BL.Services;
 using AcornAPI.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Acorn.BL.Enums;
 
 namespace AcornAPI.Controllers
 {
@@ -49,8 +48,6 @@ namespace AcornAPI.Controllers
             try
             {
                 var bot = new Bot { BotId = id };
-                bot.Config = new Config { Bot = bot, BotId = id };
-                bot.Logs.Add(new Log { Bot = bot, BotId = id, Date = DateTime.Now, Status = "Created new bot" });
                 await _botService.CreateNewBotAsync(bot);
                 return Ok(_mapper.Map<BotDto>(bot));
             }

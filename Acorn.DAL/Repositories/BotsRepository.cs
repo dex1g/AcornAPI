@@ -20,7 +20,10 @@ namespace Acorn.DAL.Repositories
 
         public async Task AddBotAsync(Bot bot)
         {
+            bot.Config = new Config { Bot = bot, BotId = bot.BotId };
+            var log = new Log { Bot = bot, BotId = bot.BotId, Date = DateTime.Now, Status = "Created new bot" };
             _context.Bots.Add(bot);
+            _context.Logs.Add(log);
             await _context.SaveChangesAsync();
         }
 

@@ -121,7 +121,7 @@
     <value>Account's validation failed</value>
   </data>
   <data name="BotValidFailString" xml:space="preserve">
-    <value>Bot's validation failed</value>
+    <value>Bot's validation failed - make sure that BotId is between 1 and 999</value>
   </data>
   <data name="ConfigValidFailString" xml:space="preserve">
     <value>Config's validation failed</value>

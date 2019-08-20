@@ -79,7 +79,7 @@ namespace Acorn.BL {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bot&apos;s validation failed.
+        ///   Looks up a localized string similar to Bot&apos;s validation failed - make sure that BotId is between 1 and 999.
         /// </summary>
         internal static string BotValidFailString {
             get {
