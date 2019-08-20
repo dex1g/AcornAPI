@@ -8,7 +8,7 @@ It also provides an easy way to fetch data about the current state of the leveli
 
 The minimal user input is one time configuration for each botting machine and making sure there are some new accounts in the database to refill the bots after they complete the process.
 
-All endpoints all listed in Swagger with required JSON request bodies.
+All endpoints are listed in Swagger with required JSON request bodies.
 
 ## Technologies used
 
@@ -27,4 +27,4 @@ All endpoints all listed in Swagger with required JSON request bodies.
 - SOLID - the API is implemented using a high level of abstraction and uses interfaces to limit the dependencies, all classes have a single responsibility and necessary communication between them also uses interfaces
 - Dependency Injection - helps to maintain a high level of abstraction and implement Dependency Inversion principle
 
-### An example of web management panel implementation, which consumes this API can be found [**here**](https://github.com/LeszekBlazewski/AcornFront) (WIP - repository can still be private)
+### An example of web management panel implementation, which consumes this API can be found [**here**](https://github.com/LeszekBlazewski/AcornFront) (Work in progress - repository can still be private)
