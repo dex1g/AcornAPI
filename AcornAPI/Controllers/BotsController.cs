@@ -33,7 +33,7 @@ namespace AcornAPI.Controllers
             botDto.BotId = id;
             try
             {
-                BotOrder updatedBotStatus = await _botService.UpdateBotAsync(_mapper.Map<Bot>(botDto));
+                var updatedBotStatus = await _botService.UpdateBotAsync(_mapper.Map<Bot>(botDto));
                 return Ok(updatedBotStatus);
             }
             catch (InvalidOperationException ex)
@@ -42,18 +42,16 @@ namespace AcornAPI.Controllers
             }
         }
 
-        // POST: api/Bots
-        [HttpPost]
-        public async Task<ActionResult> CreateBot([FromBody]BotDto botDto)
+        // POST: api/Bots/5
+        [HttpPost("{id}")]
+        public async Task<ActionResult> CreateBot(int id)
         {
             try
             {
-                var bot = _mapper.Map<Bot>(botDto);
-                bot.Config = new Config { Bot = bot, BotId = bot.BotId };
+                var bot = new Bot { BotId = id };
+                bot.Config = new Config { Bot = bot, BotId = id };
                 await _botService.CreateNewBotAsync(bot);
-                //await _configService.CreateNewConfigAsync(botConfig);
-                //return CreatedAtAction(nameof(GetBotById), new { BotId = bot.BotId }, bot);
-                return Ok();
+                return Ok(_mapper.Map<BotDto>(bot));
             }
             catch (InvalidOperationException ex)
             {
