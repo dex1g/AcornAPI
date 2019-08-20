@@ -41,13 +41,13 @@ namespace AcornAPI.Controllers
             }
         }
 
-        // POST: api/Bots/5
-        [HttpPost("{id}")]
-        public async Task<ActionResult> CreateBot(int id)
+        // POST: api/Bots
+        [HttpPost]
+        public async Task<ActionResult> CreateBot([FromBody]BotDto botDto)
         {
             try
             {
-                var bot = new Bot { BotId = id };
+                var bot = _mapper.Map<Bot>(botDto);
                 await _botService.CreateNewBotAsync(bot);
                 return Ok(_mapper.Map<BotDto>(bot));
             }
