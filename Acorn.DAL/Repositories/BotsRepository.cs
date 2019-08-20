@@ -20,6 +20,10 @@ namespace Acorn.DAL.Repositories
 
         public async Task AddBotAsync(Bot bot)
         {
+            var exists = await _context.Bots.AnyAsync(b => b.BotId == bot.BotId);
+            if (exists)
+                throw new InvalidOperationException(Resources.BotAlreadyExistString);
+
             bot.Config = new Config { Bot = bot, BotId = bot.BotId };
             var log = new Log { Bot = bot, BotId = bot.BotId, Date = DateTime.Now, Status = "Created new bot" };
             _context.Bots.Add(bot);

@@ -120,6 +120,9 @@
   <data name="AccNotExistString" xml:space="preserve">
     <value>Account does not exist</value>
   </data>
+  <data name="BotAlreadyExistString" xml:space="preserve">
+    <value>A Bot with this id already exists</value>
+  </data>
   <data name="BotNotExistString" xml:space="preserve">
     <value>Bot does not exist</value>
   </data>

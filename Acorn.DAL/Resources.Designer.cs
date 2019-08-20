@@ -70,6 +70,15 @@ namespace Acorn.DAL {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A Bot with this id already exists.
+        /// </summary>
+        internal static string BotAlreadyExistString {
+            get {
+                return ResourceManager.GetString("BotAlreadyExistString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bot does not exist.
         /// </summary>
         internal static string BotNotExistString {
