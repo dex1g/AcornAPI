@@ -20,7 +20,9 @@ namespace AcornAPI.Configurations
             CreateMap<User, RegisterQuery>();
             CreateMap<RegisterQuery, User>();
             CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
             CreateMap<FreshAccount, Account>();
+            CreateMap<Account, FreshAccount>();
             CreateMap<Account, ReadyAccount>();
         }
     }

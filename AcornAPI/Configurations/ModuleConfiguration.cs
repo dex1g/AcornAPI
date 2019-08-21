@@ -20,9 +20,9 @@ namespace AcornAPI.Configurations
 {
     public class ModuleConfiguration
     {
-        private IServiceCollection _services;
+        private readonly IServiceCollection _services;
 
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public ModuleConfiguration(IServiceCollection services, IConfiguration configuration)
         {
@@ -59,7 +59,7 @@ namespace AcornAPI.Configurations
 
         public void AddDatabaseContext()
         {
-            _services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(_configuration.GetConnectionString("AcornDatabase")));
+            _services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(_configuration.GetConnectionString("TestAcornDatabase")));
 
             _services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>().BuildServiceProvider();
         }

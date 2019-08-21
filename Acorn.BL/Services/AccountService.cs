@@ -71,5 +71,10 @@ namespace Acorn.BL.Services
         {
             await _accountsRepository.UpdateLevelingProgressAsync(accountId, level, expPercentage);
         }
+
+        public async Task DetachAccountAsync(int accountId)
+        {
+            await _accountsRepository.DetachAccountAsync(accountId);
+        }
     }
 }

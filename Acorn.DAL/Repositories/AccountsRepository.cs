@@ -118,7 +118,23 @@ namespace Acorn.DAL.Repositories
             }
             else
             {
-                throw new InvalidOperationException(Resources.NoFreshAccInRegionString);
+                throw new InvalidOperationException(Resources.AccNotExistString);
+            }
+        }
+
+        public async Task DetachAccountAsync(int accountId)
+        {
+            var account = await _context.Accounts.FirstOrDefaultAsync(x => x.AccountId == accountId);
+            if (account != null)
+            {
+                var freshAcc = _mapper.Map<FreshAccount>(account);
+                _context.Accounts.Remove(account);
+                _context.FreshAccounts.Add(freshAcc);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException(Resources.AccNotExistString);
             }
         }
     }

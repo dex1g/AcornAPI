@@ -48,7 +48,7 @@ namespace AcornAPI.Controllers
         {
             try
             {
-                Account insertedAccount = await _accountService.CreateNewAccountAsync(_mapper.Map<Account>(accountDto));
+                var insertedAccount = await _accountService.CreateNewAccountAsync(_mapper.Map<Account>(accountDto));
                 return Ok(insertedAccount);
             }
             catch (InvalidOperationException ex)
@@ -65,10 +65,6 @@ namespace AcornAPI.Controllers
             {
                 await _accountService.DeleteAccountAsync(id);
                 return Ok();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
@@ -151,6 +147,21 @@ namespace AcornAPI.Controllers
             try
             {
                 await _accountService.UpdateLevelingProgressAsync(id, query.Level, query.ExpPercentage);
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // POST: api/Accounts/5/Detach
+        [HttpPost("{id:int}/Detach")]
+        public async Task<ActionResult> DetachAccount(int id)
+        {
+            try
+            {
+                await _accountService.DetachAccountAsync(id);
                 return Ok();
             }
             catch (InvalidOperationException ex)
