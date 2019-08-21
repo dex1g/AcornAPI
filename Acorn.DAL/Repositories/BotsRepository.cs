@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Acorn.BL.Enums;
 using Acorn.BL.Models;
 using Acorn.BL.RepositoriesInterfaces;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace Acorn.DAL.Repositories
@@ -12,10 +13,12 @@ namespace Acorn.DAL.Repositories
     public class BotsRepository : IBotsRepository
     {
         private readonly DatabaseContext _context;
+        private readonly IMapper _mapper;
 
-        public BotsRepository(DatabaseContext context)
+        public BotsRepository(DatabaseContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task AddBotAsync(Bot bot)
@@ -37,6 +40,11 @@ namespace Acorn.DAL.Repositories
 
             if (botToDelete != null)
             {
+                var accounts = _context.Accounts.Where(a => a.BotId == botToDelete.BotId);
+                var freshAccs = _mapper.Map<IEnumerable<FreshAccount>>(accounts);
+
+                _context.Accounts.RemoveRange(accounts);
+                _context.AddRange(freshAccs);
                 _context.Bots.Remove(botToDelete);
                 await _context.SaveChangesAsync();
             }
