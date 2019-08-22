@@ -3,8 +3,7 @@ using System.Globalization;
 
 namespace Acorn.BL.Helpers
 {
-    // Custom exception class for throwing application specific exceptions (e.g. for validation) 
-    // that can be caught and handled within the application
+    // Custom exception class for throwing JWT authentication specific exceptions
     public class AuthenticationException : Exception
     {
         public AuthenticationException() : base() { }

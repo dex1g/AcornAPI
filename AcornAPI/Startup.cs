@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AcornAPI.Configurations;
+using AcornAPI.SignalR;
 
 namespace AcornAPI
 {
@@ -35,6 +36,8 @@ namespace AcornAPI
             moduleConfiguration.ConfigureServices();
 
             moduleConfiguration.AddSwagger();
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,11 +48,21 @@ namespace AcornAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpsRedirection();
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 );
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotifyHub>("/hub");
+            });
 
             app.UseAuthentication();
 

@@ -5,8 +5,11 @@ using AutoMapper;
 using Acorn.BL.Models;
 using Acorn.BL.Services;
 using AcornAPI.Dtos;
+using AcornAPI.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 
 namespace AcornAPI.Controllers
 {
@@ -19,10 +22,13 @@ namespace AcornAPI.Controllers
 
         private readonly IMapper _mapper;
 
-        public BotsController(IBotService botService, IMapper mapper)
+        private readonly IHubContext<NotifyHub, ITypedHubClient> _hubContext;
+
+        public BotsController(IBotService botService, IMapper mapper, IHubContext<NotifyHub, ITypedHubClient> hubContext)
         {
             _botService = botService;
             _mapper = mapper;
+            _hubContext = hubContext;
         }
 
         // PUT: api/Bots/5
@@ -33,6 +39,9 @@ namespace AcornAPI.Controllers
             try
             {
                 var updatedBotStatus = await _botService.UpdateBotAsync(_mapper.Map<Bot>(botDto));
+
+                await _hubContext.Clients.All.BotUpdate("PUT", JsonConvert.SerializeObject(botDto));
+
                 return Ok(updatedBotStatus);
             }
             catch (InvalidOperationException ex)
@@ -49,6 +58,9 @@ namespace AcornAPI.Controllers
             {
                 var bot = _mapper.Map<Bot>(botDto);
                 await _botService.CreateNewBotAsync(bot);
+
+                await _hubContext.Clients.All.BotUpdate("POST", JsonConvert.SerializeObject(_mapper.Map<BotDto>(bot)));
+
                 return Ok(_mapper.Map<BotDto>(bot));
             }
             catch (InvalidOperationException ex)
