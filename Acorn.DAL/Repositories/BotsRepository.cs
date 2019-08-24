@@ -44,7 +44,7 @@ namespace Acorn.DAL.Repositories
                 var freshAccs = _mapper.Map<IEnumerable<FreshAccount>>(accounts);
 
                 _context.Accounts.RemoveRange(accounts);
-                _context.AddRange(freshAccs);
+                _context.FreshAccounts.AddRange(freshAccs);
                 _context.Bots.Remove(botToDelete);
                 await _context.SaveChangesAsync();
             }

@@ -59,7 +59,7 @@ namespace AcornAPI.Configurations
 
         public void AddDatabaseContext()
         {
-            _services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(_configuration.GetConnectionString("TestAcornDatabase")), ServiceLifetime.Transient);
+            _services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(_configuration.GetConnectionString("TestAcornDatabase")));
 
             _services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>().BuildServiceProvider();
         }

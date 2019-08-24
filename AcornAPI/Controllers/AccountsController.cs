@@ -103,11 +103,19 @@ namespace AcornAPI.Controllers
         [HttpGet("Bot/{id:int}")]
         public async Task<ActionResult> GetAllAccountsByBotId(int id)
         {
-            var accounts = await _accountService.GetAllAccountsByBotIdAsync(id);
+            try
+            {
+                var accounts = await _accountService.GetAllAccountsByBotIdAsync(id);
 
-            var accountsToReturn = _mapper.Map<List<AccountDto>>(accounts);
+                var accountsToReturn = _mapper.Map<List<AccountDto>>(accounts);
 
-            return Ok(accountsToReturn);
+                return Ok(accountsToReturn);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         // POST: api/Accounts/5/MarkAsDone
