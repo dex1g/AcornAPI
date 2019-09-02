@@ -27,6 +27,8 @@ namespace AcornAPI
 
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddCors();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             moduleConfiguration.AddJwtAuthentication();
