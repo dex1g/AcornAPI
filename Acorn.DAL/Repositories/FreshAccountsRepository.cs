@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Acorn.BL.Models;
 using Acorn.BL.RepositoriesInterfaces;
@@ -40,7 +41,7 @@ namespace Acorn.DAL.Repositories
 
         public async Task<IEnumerable<FreshAccount>> GetAllAsync()
         {
-            return await _context.FreshAccounts.ToListAsync();
+            return await _context.FreshAccounts.OrderBy(a => a.FreshAccountId).ToListAsync();
         }
 
         public async Task<FreshAccount> GetFreshAccountByIdAsync(long freshAccountId)

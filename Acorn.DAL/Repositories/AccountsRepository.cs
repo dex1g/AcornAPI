@@ -45,7 +45,7 @@ namespace Acorn.DAL.Repositories
 
         public async Task<IEnumerable<Account>> GetAllByBotIdAsync(long botId)
         {
-            return await _context.Accounts.Where(account => account.BotId == botId).ToListAsync();
+            return await _context.Accounts.Where(account => account.BotId == botId).OrderBy(a => a.AccountId).ToListAsync();
         }
 
         public async Task<Account> GetAccountByIdAsync(long accountId)
@@ -55,7 +55,7 @@ namespace Acorn.DAL.Repositories
 
         public async Task<IEnumerable<Account>> GetAllAsync()
         {
-            return await _context.Accounts.ToListAsync();
+            return await _context.Accounts.OrderBy(a => a.AccountId).ToListAsync();
         }
 
         public async Task UpdateAccountAsync(Account account)
