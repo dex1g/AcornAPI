@@ -29,6 +29,7 @@ namespace Acorn.DAL
             modelBuilder.ForNpgsqlHasEnum<BotOrder>();
             modelBuilder.ForNpgsqlHasEnum<QueueType>();
             modelBuilder.ForNpgsqlHasEnum<Region>();
+            modelBuilder.ForNpgsqlHasEnum<LevelingModel>();
 
             modelBuilder.Entity<Account>(entity =>
             {
@@ -87,7 +88,7 @@ namespace Acorn.DAL
                 entity.Property(e => e.BotOrder)
                     .IsRequired()
                     .HasColumnName("bot_order")
-                    .HasDefaultValueSql("'start'::bot_orders");
+                    .HasDefaultValueSql("'start'::bot_order");
             });
 
             modelBuilder.Entity<Config>(entity =>
@@ -100,7 +101,7 @@ namespace Acorn.DAL
                 entity.Property(e => e.AiConfig)
                     .IsRequired()
                     .HasColumnName("ai_config")
-                    .HasDefaultValueSql("'follow'::ai_configs");
+                    .HasDefaultValueSql("'follow'::ai_config");
 
                 entity.Property(e => e.BotId)
                     .HasColumnName("bot_id")
@@ -129,7 +130,22 @@ namespace Acorn.DAL
                 entity.Property(e => e.QueueType)
                     .IsRequired()
                     .HasColumnName("queue_type")
-                    .HasDefaultValueSql("'intro'::queue_types");
+                    .HasDefaultValueSql("'intro'::queue_type");
+
+                entity.Property(e => e.DisableWindowsUpdate)
+                    .IsRequired()
+                    .HasColumnName("disable_windows_update")
+                    .HasDefaultValueSql("true");
+
+                entity.Property(e => e.LevelingModel)
+                    .IsRequired()
+                    .HasColumnName("leveling_model")
+                    .HasDefaultValueSql("'classic'::leveling_model");
+
+                entity.Property(e => e.DesiredLevel)
+                    .IsRequired()
+                    .HasColumnName("desired_level")
+                    .HasDefaultValueSql("30");
 
                 entity.HasOne(d => d.Bot)
                     .WithOne(p => p.Config)
