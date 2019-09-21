@@ -101,7 +101,7 @@ namespace Acorn.DAL
                 entity.Property(e => e.AiConfig)
                     .IsRequired()
                     .HasColumnName("ai_config")
-                    .HasDefaultValueSql("'follow'::ai_config");
+                    .HasDefaultValueSql("'laner'::ai_config");
 
                 entity.Property(e => e.BotId)
                     .HasColumnName("bot_id")
