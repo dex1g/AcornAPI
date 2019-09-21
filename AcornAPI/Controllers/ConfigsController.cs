@@ -39,7 +39,7 @@ namespace AcornAPI.Controllers
             }
         }
 
-        // GET: api/Congifs/5
+        // GET: api/Configs/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ConfigDto>> GetConfigById(int id)
         {

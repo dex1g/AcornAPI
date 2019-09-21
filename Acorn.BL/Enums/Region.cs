@@ -4,6 +4,13 @@
     {
         Eune,
         Euw,
-        Na
+        Na,
+        Oceania,
+        Turkey,
+        Russia,
+        Lan,
+        Las,
+        Brazil,
+        Japan
     }
 }
