@@ -27,4 +27,4 @@ All endpoints are listed in Swagger with required JSON request bodies.
 - SOLID - the API is implemented using a high level of abstraction and uses interfaces to limit the dependencies, all classes have a single responsibility and necessary communication between them also uses interfaces
 - Dependency Injection - helps to maintain a high level of abstraction and implement Dependency Inversion principle
 
-### An example of web management panel implementation, which consumes this API can be found [**here**](https://github.com/LeszekBlazewski/AcornFront) (Work in progress - repository can still be private)
+### An example of web management panel implementation, which consumes this API can be found [**here**](https://github.com/LeszekBlazewski/AcornSpa) (Work in progress - repository can still be private)
