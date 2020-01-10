@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using System.Threading.Tasks;
 using Acorn.BL.Enums;
 using Acorn.BL.RepositoriesInterfaces;
 using Acorn.BL.Services;
@@ -60,9 +59,13 @@ namespace AcornAPI.Configurations
 
         public void AddDatabaseContext()
         {
-            _services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(_configuration.GetConnectionString("TestAcornDatabase")));
+            var connectionString = _configuration.GetConnectionString("TestAcornDatabase");
 
-            _services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>().BuildServiceProvider();
+            //_services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString));//, ServiceLifetime.Transient);
+
+            _services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>(options => options
+                .UseNpgsql(connectionString))
+                .BuildServiceProvider();
         }
 
         public void AddSwagger()
@@ -110,17 +113,18 @@ namespace AcornAPI.Configurations
                 {
                     x.Events = new JwtBearerEvents
                     {
-                        OnTokenValidated = context =>
+                        OnTokenValidated = async context =>
                         {
-                            var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
                             var userId = int.Parse(context.Principal.Identity.Name, CultureInfo.InvariantCulture);
-                            var user = userService.GetById(userId);
-                            if (user == null)
+                            using (var con = new DatabaseContext(new DbContextOptionsBuilder<DatabaseContext>().UseNpgsql(_configuration.GetConnectionString("TestAcornDatabase")).Options))
                             {
-                                // return unauthorized if user no longer exists
-                                context.Fail("Unauthorized");
+                                var user = await con.Users.FindAsync(userId);
+                                if (user == null)
+                                {
+                                    // return unauthorized if user no longer exists
+                                    context.Fail("Unauthorized");
+                                }
                             }
-                            return Task.CompletedTask;
                         }
                     };
                     x.RequireHttpsMetadata = false;
