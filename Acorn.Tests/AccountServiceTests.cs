@@ -13,8 +13,8 @@ namespace Tests
     {
         private static DateTime[] _invalidBirthDateTestData =
         {
-            new DateTime(2020,4,12),
-            new DateTime(2019,12,3),
+            DateTime.Now.AddDays(2),
+            DateTime.Now.AddYears(3),
         };
 
 
