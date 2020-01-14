@@ -12,6 +12,7 @@ namespace Acorn.BL.Services
         Task DeleteBotAsync(long botId);
         Task<BotOrder> UpdateBotAsync(Bot bot);
         Task<IEnumerable<Bot>> GetAllBotsAsync();
-        Task<Bot> GetBotByIdAsync(long botId);
+        Task<Bot> GetBotByIdAsync(int botId);
+        Task SetAllBotOrdersAsync(BotOrder order);
     }
 }

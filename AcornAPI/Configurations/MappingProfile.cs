@@ -5,9 +5,9 @@ using AutoMapper;
 
 namespace AcornAPI.Configurations
 {
-    public class MappingProflie : Profile
+    public class MappingProfile : Profile
     {
-        public MappingProflie()
+        public MappingProfile()
         {
             CreateMap<Account, AccountDto>();
             CreateMap<AccountDto, Account>();

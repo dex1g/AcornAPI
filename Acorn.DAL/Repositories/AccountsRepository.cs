@@ -55,7 +55,7 @@ namespace Acorn.DAL.Repositories
 
         public async Task<IEnumerable<Account>> GetAllAsync()
         {
-            return await _context.Accounts.OrderBy(a => a.AccountId).ToListAsync();
+            return await _context.Accounts.OrderBy(a => a.Level).ThenByDescending(a => a.ExpPercentage).ToListAsync();
         }
 
         public async Task UpdateAccountAsync(Account account)

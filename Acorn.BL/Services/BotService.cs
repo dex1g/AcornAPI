@@ -37,9 +37,14 @@ namespace Acorn.BL.Services
             return await _botsRepository.GetAllAsync();
         }
 
-        public async Task<Bot> GetBotByIdAsync(long botId)
+        public async Task<Bot> GetBotByIdAsync(int botId)
         {
             return await _botsRepository.GetBotByIdAsync(botId);
+        }
+
+        public async Task SetAllBotOrdersAsync(BotOrder order)
+        {
+            await _botsRepository.SetAllBotOrdersAsync(order);
         }
 
         public async Task<BotOrder> UpdateBotAsync(Bot bot)

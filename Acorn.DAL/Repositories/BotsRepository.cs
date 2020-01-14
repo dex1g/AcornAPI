@@ -59,9 +59,19 @@ namespace Acorn.DAL.Repositories
             return await _context.Bots.OrderBy(key => key.BotId).ToListAsync();
         }
 
-        public async Task<Bot> GetBotByIdAsync(long botId)
+        public async Task<Bot> GetBotByIdAsync(int botId)
         {
-            return await _context.Bots.AsNoTracking().FirstOrDefaultAsync(b => b.BotId == botId);
+            return await _context.Bots.FindAsync(botId);
+        }
+
+        public async Task SetAllBotOrdersAsync(BotOrder order)
+        {
+            var bots = await _context.Bots.ToListAsync();
+
+            foreach (var bot in bots)
+                bot.BotOrder = order;
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task<BotOrder> UpdateBotAsync(Bot bot)

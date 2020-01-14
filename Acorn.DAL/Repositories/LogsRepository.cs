@@ -23,7 +23,7 @@ namespace Acorn.DAL.Repositories
             _context.Logs.Add(log);
             await _context.SaveChangesAsync();
 
-            long addedId = log.LogId;
+            var addedId = log.LogId;
 
             return addedId;
         }

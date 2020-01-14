@@ -5,7 +5,7 @@ using AutoMapper;
 using Acorn.BL.Models;
 using Acorn.BL.Services;
 using AcornAPI.Dtos;
-using AcornAPI.SignalR;
+using AcornAPI.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -22,13 +22,10 @@ namespace AcornAPI.Controllers
 
         private readonly IMapper _mapper;
 
-        private readonly IHubContext<NotifyHub, ITypedHubClient> _hubContext;
-
-        public BotsController(IBotService botService, IMapper mapper, IHubContext<NotifyHub, ITypedHubClient> hubContext)
+        public BotsController(IBotService botService, IMapper mapper)
         {
             _botService = botService;
             _mapper = mapper;
-            _hubContext = hubContext;
         }
 
         // PUT: api/Bots/5
@@ -39,8 +36,6 @@ namespace AcornAPI.Controllers
             try
             {
                 var updatedBotStatus = await _botService.UpdateBotAsync(_mapper.Map<Bot>(botDto));
-
-                await _hubContext.Clients.All.BotUpdate("PUT", JsonConvert.SerializeObject(botDto));
 
                 return Ok(updatedBotStatus);
             }
@@ -58,8 +53,6 @@ namespace AcornAPI.Controllers
             {
                 var bot = _mapper.Map<Bot>(botDto);
                 await _botService.CreateNewBotAsync(bot);
-
-                await _hubContext.Clients.All.BotUpdate("POST", JsonConvert.SerializeObject(_mapper.Map<BotDto>(bot)));
 
                 return Ok(_mapper.Map<BotDto>(bot));
             }
@@ -119,6 +112,22 @@ namespace AcornAPI.Controllers
             catch (InvalidOperationException ex)
             {
                 return NotFound(ex.Message);
+            }
+        }
+
+        // POST: api/Bots/SetAllBotOrders
+        [HttpPost("SetAllBotOrders")]
+        public async Task<ActionResult> SetAllBotOrders([FromBody]BotOrderUpdateQuery query)
+        {
+            try
+            {
+                await _botService.SetAllBotOrdersAsync(query.BotOrder);
+
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }
