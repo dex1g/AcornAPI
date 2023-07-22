@@ -99,7 +99,7 @@ namespace AcornAPI.Controllers
             }
         }
 
-        // GET: api/Accounts/5
+        // GET: api/Accounts/Bot/5
         [HttpGet("Bot/{id:int}")]
         public async Task<ActionResult> GetAllAccountsByBotId(int id)
         {
