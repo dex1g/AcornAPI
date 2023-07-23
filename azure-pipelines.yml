@@ -31,7 +31,7 @@ steps:
 - task: CopyFilesOverSSH@0
   inputs:
     sshEndpoint: '217 acorn'
-    sourceFolder: '$(System.DefaultWorkingDirectory)/AcornAPI/bin/Release/netcoreapp2.2/'
+    sourceFolder: '$(build.artifactStagingDirectory)'
     contents: '**'
     targetFolder: '/aatest'
     readyTimeout: '20000'
