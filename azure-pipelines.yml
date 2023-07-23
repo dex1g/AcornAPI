@@ -31,8 +31,15 @@ steps:
 - task: CopyFilesOverSSH@0
   inputs:
     sshEndpoint: '217 acorn'
-    sourceFolder: '$(build.artifactStagingDirectory)'
+    sourceFolder: '$(System.DefaultWorkingDirectory)/AcornAPI/bin/Release/netcoreapp2.2/'
     contents: '**'
-    targetFolder: '/aatest'
+    targetFolder: '/apis/acornapi'
     readyTimeout: '20000'
     cleanTargetFolder: true
+
+- task: SSH@0
+  inputs:
+    sshEndpoint: '217 acorn'
+    runOptions: 'commands'
+    commands: 'sudo systemctl restart acorn-api.service'
+    readyTimeout: '20000'
