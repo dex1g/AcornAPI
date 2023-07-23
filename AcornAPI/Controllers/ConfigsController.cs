@@ -40,6 +40,7 @@ namespace AcornAPI.Controllers
         }
 
         // GET: api/Configs/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<ConfigDto>> GetConfigById(int id)
         {

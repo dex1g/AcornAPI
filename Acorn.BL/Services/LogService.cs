@@ -16,43 +16,17 @@ namespace Acorn.BL.Services
             _logsRepository = logsRepository;
         }
 
-        public async Task<long> CreateNewLogAsync(Log log)
+        public async Task<Log> GetLogByBotId(int botId)
         {
-            if (!LogValidator.ValidateDefault(log))
-            {
-                throw new InvalidOperationException(Resources.LogValidFailString);
-            }
-
-            return await _logsRepository.AddLogAsync(log);
+            return await _logsRepository.GetByBotId(botId);
         }
 
-        public async Task DeleteLogAsync(long logId)
+        public async Task UpdateLogAsync(int botId, string message, DateTime date)
         {
-            await _logsRepository.DeleteLogAsync(logId);
-        }
+            var log = await _logsRepository.GetByBotId(botId) ?? new Log { BotId = botId };
+            log.Status = message;
+            log.Date = date;
 
-        public async Task<IEnumerable<Log>> GetAllLogsAsync()
-        {
-            return await _logsRepository.GetAllAsync();
-        }
-
-        public async Task<IEnumerable<Log>> GetAllLogsByBotIdAsync(int botId)
-        {
-            return await _logsRepository.GetAllByBotId(botId);
-        }
-
-        public async Task<Log> GetLogByIdAsync(long logId)
-        {
-            return await _logsRepository.GetLogByIdAsync(logId);
-        }
-
-        public async Task<Log> GetLatestLogByBotId(int botId)
-        {
-            return await _logsRepository.GetLatestLogByBotId(botId);
-        }
-
-        public async Task UpdateLogAsync(Log log)
-        {
             if (!LogValidator.ValidateDefault(log))
             {
                 throw new InvalidOperationException(Resources.LogValidFailString);
