@@ -8,8 +8,6 @@ using AcornAPI.Dtos;
 using AcornAPI.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Newtonsoft.Json;
 
 namespace AcornAPI.Controllers
 {
@@ -29,6 +27,7 @@ namespace AcornAPI.Controllers
         }
 
         // PUT: api/Bots/5
+        [AllowAnonymous]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateBot(int id, [FromBody]BotDto botDto)
         {
@@ -82,6 +81,7 @@ namespace AcornAPI.Controllers
         }
 
         // GET: api/Bots
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult> GetAllBots()
         {
@@ -100,6 +100,7 @@ namespace AcornAPI.Controllers
         }
 
         // GET: api/Bots/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<BotDto>> GetBotById(int id)
         {

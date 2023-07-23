@@ -100,6 +100,7 @@ namespace AcornAPI.Controllers
         }
 
         // GET: api/Accounts/Bot/5
+        [AllowAnonymous]
         [HttpGet("Bot/{id:int}")]
         public async Task<ActionResult> GetAllAccountsByBotId(int id)
         {
@@ -119,6 +120,7 @@ namespace AcornAPI.Controllers
         }
 
         // POST: api/Accounts/5/MarkAsDone
+        [AllowAnonymous]
         [HttpPost("{id:int}/MarkAsDone")]
         public async Task<ActionResult> MarkAccountAsDone(int id)
         {
@@ -134,6 +136,7 @@ namespace AcornAPI.Controllers
         }
 
         // POST: api/Accounts/Bot/5/RequestAccount
+        [AllowAnonymous]
         [HttpPost("Bot/{id:int}/RequestAccount")]
         public async Task<ActionResult> RequestAccount(int id, [FromBody]RequestAccountQuery query)
         {
@@ -149,6 +152,7 @@ namespace AcornAPI.Controllers
         }
 
         // PATCH: api/Accounts/5
+        [AllowAnonymous]
         [HttpPatch("{id:int}")]
         public async Task<ActionResult> UpdateLevelingProgress(int id, [FromBody]UpdateLevelingProgressQuery query)
         {
