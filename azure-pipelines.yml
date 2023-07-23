@@ -35,7 +35,6 @@ steps:
     contents: '**'
     targetFolder: '/apis/acornapi'
     readyTimeout: '20000'
-    cleanTargetFolder: true
 
 - task: SSH@0
   inputs:
