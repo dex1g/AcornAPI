@@ -201,7 +201,7 @@ namespace Acorn.DAL
                 entity.Property(e => e.Status)
                     .IsRequired()
                     .HasColumnName("status")
-                    .HasMaxLength(150);
+                    .HasMaxLength(250);
 
                 entity.HasOne(d => d.Bot)
                     .WithMany(p => p.Logs)
